@@ -1,0 +1,46 @@
+// For modularization all colors will be saved here
+$darkPrimaryColor: #17E205;
+$primaryColor: #90ff00;
+$primaryAccent: #bcff66;
+$primaryLight: #d3ff99;
+$specialBlack: #141414;
+$specialWhite: #fefdfd;
+$grey: #dfdddd;
+$darkGrey: #808080;
+
+//Measurements
+$padding: 40px;
+$buttonBorderRadius: 12px;
+
+
+//BASIC ANIMATIONS
+@mixin scaleHoverAnimation {
+    transform: scale(1.2);
+    transition: 0.8s ease-in-out;
+}
+
+
+//MY OWN CSS LIBRARY :) (MESTRAP)
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin normal_button {
+    padding: 10px 50px;
+    border-radius: $buttonBorderRadius;
+    color: $specialWhite;
+    background-color: $darkPrimaryColor;
+}
+
+//for media-queries
+@mixin mobile {
+    @media screen and (max-width: 420px) {
+        @content;
+    }
+}

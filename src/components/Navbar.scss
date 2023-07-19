@@ -1,0 +1,79 @@
+@import '../styles/variables.scss';
+
+.navbar {
+    position: fixed !important;
+    height: 60px;
+    width: -webkit-fill-available;
+    background-color: $specialWhite;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+
+    .navbar_logo {
+        cursor: pointer;
+        text-decoration: none;
+        color: $specialBlack;
+
+        &:hover {
+            @include scaleHoverAnimation;
+        }
+    }
+
+    .navbar_links {
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        a {
+            color: $specialBlack;
+            inset: 10px;
+            text-decoration: none;
+
+            &:hover {
+                color: $darkPrimaryColor;
+                @include scaleHoverAnimation;
+            }
+
+            .active {
+                color: $primaryColor;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .navbar_buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+
+
+        &_login {
+            text-decoration: none;
+            color: $darkPrimaryColor;
+            font-weight: 700;
+            cursor: pointer;
+
+            &:hover {
+                @include scaleHoverAnimation;
+            }
+        }
+
+        &_signup {
+            text-decoration: none;
+            background-color: $darkPrimaryColor;
+            color: $specialWhite;
+            padding: 10px $padding;
+            border-radius: 12px;
+            cursor: pointer;
+
+            &:hover {
+                @include scaleHoverAnimation;
+            }
+        }
+    }
+
+
+}
