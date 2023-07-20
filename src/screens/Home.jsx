@@ -1,4 +1,4 @@
-import '../styles/home.css'
+import '../styles/home.scss'
 
 import Navbar from '../components/navbar'
 import Landing from '../components/landing'
