@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import './footer.scss'
 
 const Footer = () => {
+    const navigate = useNavigate()
+
+
+    function goToSignup() {
+        navigate("/signup")
+    }
     return (
         <div className="footer" id="footer">
             <div className="footer_top">
@@ -21,7 +28,7 @@ const Footer = () => {
                 </div>
                 <div className="footer_top_col">
                     <h1>Track your payments, generate invoices and receive payments fast and swift now.</h1>
-                    <div className="footer_top_col_button">Sign Up</div>
+                    <div className="footer_top_col_button" onClick={goToSignup}>Sign Up</div>
                 </div>
             </div>
             <div className="footer_bottom">
