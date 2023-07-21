@@ -7,6 +7,7 @@ import Home from './screens/Home'
 import Signup from './screens/Signup'
 import Login from './screens/Login'
 import Dashboard from './screens/Dashboard'
+import AccountSetup from './screens/AccountSetup'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='/login' element={<Login />} />
 
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/accountsetup' element={<AccountSetup />} />
       </Routes>
     }
   </BrowserRouter>,

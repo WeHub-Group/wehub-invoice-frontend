@@ -12,6 +12,12 @@ $darkGrey: #808080;
 $padding: 40px;
 $buttonBorderRadius: 12px;
 
+//Custom Items
+@mixin inputBox {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid $darkGrey;
+}
 
 //BASIC ANIMATIONS
 @mixin scaleHoverAnimation {
