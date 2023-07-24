@@ -17,6 +17,16 @@ $buttonBorderRadius: 12px;
     border-radius: 10px;
     padding: 10px;
     border: 1px solid $darkGrey;
+    font-family: 'Lato';
+
+    &::placeholder {
+        color: $grey;
+    }
+
+    &:focus-visible {
+        outline: 1px solid $darkPrimaryColor;
+        border-color: transparent;
+    }
 }
 
 //BASIC ANIMATIONS

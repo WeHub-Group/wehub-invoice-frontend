@@ -3,10 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import '../styles/signup.scss'
 
 const Signup = () => {
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+
+    function formSubmit() {
+        navigate("/accountSetup")
+    }
 
     return (
         <div className="signup">
@@ -14,9 +19,9 @@ const Signup = () => {
                 <div className="header">Get Started!</div>
                 <div className="center_label">You are one step ahead towards recieving due payments and generating invoices instantly.</div>
 
-                <form>
+                <form onSubmit={formSubmit}>
                     <label htmlFor="">Email</label>
-                    <input type="text" placeholder='Email123@gmail.com' value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                    <input type="text" placeholder='Email123@gmail.com' minLength={2} maxLength={255} value={email} onChange={(e) => { setEmail(e.target.value) }} />
                     <label htmlFor="">Phone Number</label>
                     <input type="text" placeholder='+234 123456789' value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value) }} />
                     <label htmlFor="">Password</label>

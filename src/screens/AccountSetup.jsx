@@ -1,11 +1,17 @@
+import { useState } from 'react'
 import '../styles/accountsetup.scss'
 
 const AccountSetup = () => {
+    const [prefferedCurrency, setPrefferedCurrency] = useState("")
+    const prefferedCurrencies = ["Nigerian Naira(N)", "Ghanian Cedes(c)", "European Euro(€)", "American Dollar($)"]
+
     return (
         <div className="accountSetup">
             <div className="center">
-                <div className="header">Welcome!</div>
-                <div className="center_label">Please fill in the details to complete your account setup.</div>
+                <div className="column">
+                    <div className="header">Welcome!</div>
+                    <div className="center_label">Please fill in the details to complete your account setup.</div>
+                </div>
 
                 <form>
                     <label htmlFor="">First Name</label>
@@ -17,10 +23,18 @@ const AccountSetup = () => {
                     <label htmlFor="">Bussiness Category</label>
                     <input type="text" placeholder='Bussiness Category' />
                     <label htmlFor="">Bussiness Address</label>
-                    <input type="text" placeholder='Bussiness Category' />
+                    <input type="text" placeholder='Bussiness Address' />
                     <label htmlFor="">Bussiness Category</label>
-                    <input type="text" placeholder='Nigerian Niara' />
-                    {/* Please change the above to a multiple selct option */}
+                    <select value={prefferedCurrency} onChange={(e) => { setPrefferedCurrency(e.target.value) }} >
+                        {
+                            prefferedCurrencies.map(currency => {
+                                return (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <option value={currency} >{currency}</option>
+                                )
+                            })
+                        }
+                    </select>
                     <input type="submit" value="Proceed" />
                 </form>
             </div>
@@ -29,5 +43,4 @@ const AccountSetup = () => {
         </div>
     )
 }
-
 export default AccountSetup

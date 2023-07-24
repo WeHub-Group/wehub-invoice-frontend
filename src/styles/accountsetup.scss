@@ -3,8 +3,9 @@
 .accountSetup {
     width: 100vw;
     height: 100vh;
-    background-image: url("../assets/advert_background.png");
-    // Remember to change to the correct image
+    background-image: url("../assets/account_background.png");
+    background-position: top;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,26 +22,36 @@
         display: flex;
         flex-direction: column;
 
-        .header {
-            color: $darkPrimaryColor;
-            font-size: 28px;
-        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
 
-        &_label {
-            font-size: small;
+            .header {
+                color: $darkPrimaryColor;
+                font-size: 28px;
+            }
+
+            &_label {
+                font-size: small;
+            }
         }
 
         form {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin: 0px;
 
             label {
                 color: $darkGrey
             }
 
-            input {
+            input,
+            select {
                 @include inputBox;
+                
 
                 &::placeholder {
                     font-family: 'Lato' !important;
@@ -52,6 +63,7 @@
                 color: $specialWhite;
                 border: none;
                 cursor: pointer;
+                margin-top: 20px;
             }
         }
 
@@ -63,7 +75,7 @@
         bottom: 0;
         z-index: 3;
         background-color: $specialWhite;
-        height: 50%;
+        height: 40%;
         width: 100vw;
         border-radius: 100% 100% 0px 0px;
     }

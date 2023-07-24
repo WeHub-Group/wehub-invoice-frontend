@@ -3,15 +3,16 @@
 .signup {
     width: 100vw;
     height: 100vh;
-    background-image: url("../assets/advert_background.png");
-    // Remember to change to the correct image
+    background-image: url("../assets/account_background.png");
+    background-position: top;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .center {
         width: 30%;
-        height: auto;
+        height: 80%;
         padding: 20px;
         justify-content: space-between;
         background-color: $specialWhite;
@@ -34,9 +35,12 @@
         form {
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             gap: 10px;
-            margin-top: 30px;
-            margin-bottom: 30px;
+
+            :nth-child(odd) {
+                margin-top: 10px;
+            }
 
             label {
                 color: $darkGrey
@@ -77,7 +81,7 @@
         bottom: 0;
         z-index: 3;
         background-color: $specialWhite;
-        height: 50%;
+        height: 40%;
         width: 100vw;
         border-radius: 100% 100% 0px 0px;
     }
