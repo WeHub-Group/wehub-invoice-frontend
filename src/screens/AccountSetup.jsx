@@ -3,7 +3,9 @@ import '../styles/accountsetup.scss'
 
 const AccountSetup = () => {
     const [prefferedCurrency, setPrefferedCurrency] = useState("")
+    const [prefferedCategory, setPrefferedCategory] = useState("")
     const prefferedCurrencies = ["Nigerian Naira(N)", "Ghanian Cedes(c)", "European Euro(€)", "American Dollar($)"]
+    const prefferedCategories = ["Information Commuinication Technology", "Human Resource", ""]
 
     return (
         <div className="accountSetup">
@@ -21,7 +23,16 @@ const AccountSetup = () => {
                     <label htmlFor="">Bussiness Name</label>
                     <input type="text" placeholder='Bussiness Name' />
                     <label htmlFor="">Bussiness Category</label>
-                    <input type="text" placeholder='Bussiness Category' />
+                    <select value={prefferedCategory} onChange={(e) => { setPrefferedCategory(e.target.value) }} >
+                        {
+                            prefferedCategories.map(category => {
+                                return (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <option value={category} >{category}</option>
+                                )
+                            })
+                        }
+                    </select>
                     <label htmlFor="">Bussiness Address</label>
                     <input type="text" placeholder='Bussiness Address' />
                     <label htmlFor="">Bussiness Category</label>

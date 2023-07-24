@@ -51,11 +51,35 @@
             input,
             select {
                 @include inputBox;
-                
+
 
                 &::placeholder {
                     font-family: 'Lato' !important;
+                    color: $darkGrey
                 }
+
+                &:hover {
+                    border-color: $primaryColor;
+                    animation: blink 0.1s;
+                }
+
+                @keyframes blink {
+                    0% {
+                        transform: scale(1);
+                    }
+
+                    50% {
+                        transform: scale(1.1);
+                    }
+
+                    100% {
+                        transform: scale(1);
+                    }
+                }
+            }
+
+            select {
+                color: $darkGrey;
             }
 
             input[type='submit'] {
