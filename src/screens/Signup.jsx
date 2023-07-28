@@ -28,7 +28,8 @@ const Signup = () => {
                     <input type="password" placeholder='Password' value={password} onChange={(e) => { setPassword(e.target.value) }} />
                     <label htmlFor="">Confirm Password</label>
                     <input type="password" placeholder='Confirm Password' value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
-                    <p>By creating an account you agree to all our <br /> <span>Terms and Condition</span></p>
+                    <p>By creating an account you agree to all our <br /> <a href='#'>Terms and Condition</a></p>
+                    {/* Please redirect to link of Terms and Conditon */}
                     <input type="submit" value="Proceed" />
                 </form>
             </div>

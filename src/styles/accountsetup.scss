@@ -51,11 +51,12 @@
             input,
             select {
                 @include inputBox;
+                color: $specialBlack;
 
 
                 &::placeholder {
                     font-family: 'Lato' !important;
-                    color: $darkGrey
+                    color: $darkGrey;
                 }
 
                 &:hover {

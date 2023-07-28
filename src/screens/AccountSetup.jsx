@@ -4,8 +4,8 @@ import '../styles/accountsetup.scss'
 const AccountSetup = () => {
     const [prefferedCurrency, setPrefferedCurrency] = useState("")
     const [prefferedCategory, setPrefferedCategory] = useState("")
-    const prefferedCurrencies = ["Nigerian Naira(N)", "Ghanian Cedes(c)", "European Euro(€)", "American Dollar($)"]
-    const prefferedCategories = ["Information Commuinication Technology", "Human Resource", ""]
+    const prefferedCurrencies = ["Nigerian Naira(N)", "Ghanian Cedes(c)", "European Euro(€)", "American Dollar($)", ""]
+    const prefferedCategories = ["Information Commuinication Technology(ICT)", "Human Resource", ""]
 
     return (
         <div className="accountSetup">
@@ -34,8 +34,8 @@ const AccountSetup = () => {
                         }
                     </select>
                     <label htmlFor="">Bussiness Address</label>
-                    <input type="text" placeholder='Bussiness Address' />
-                    <label htmlFor="">Bussiness Category</label>
+                    <input type='text' placeholder='Bussiness Address' />
+                    <label htmlFor="">Currency</label>
                     <select value={prefferedCurrency} onChange={(e) => { setPrefferedCurrency(e.target.value) }} >
                         {
                             prefferedCurrencies.map(currency => {
@@ -49,7 +49,6 @@ const AccountSetup = () => {
                     <input type="submit" value="Proceed" />
                 </form>
             </div>
-
             <div className="bottom"></div>
         </div>
     )
