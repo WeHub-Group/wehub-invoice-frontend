@@ -10,6 +10,7 @@ const Login = () => {
     function formSubmit() {
         navigate("/dashboard")
     }
+
     return (
         <div className="login">
             <div className="center">
@@ -21,10 +22,9 @@ const Login = () => {
                     <input type="text" placeholder='Email123@gmail.com' minLength={2} maxLength={255} value={email} onChange={(e) => { setEmail(e.target.value) }} />
                     <label htmlFor="">Password</label>
                     <input type="password" placeholder='Password' minLength={2} maxLength={255} value={password} onChange={(e) => { setPassword(e.target.value) }} />
-                    <span>Forgot Password?</span>
+                    <Link to={"#"}>Forgot Password?</Link>
                     <input type="submit" value="Proceed" />
-
-                    <p>Don&apos;t have an account? <span>Sign Up</span></p>
+                    <p>Don&apos;t have an account? <Link to={'/signup'}>Sign Up</Link></p>
                 </form>
             </div>
             <div className="bottom"></div>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const navbar = () => {
     return (
         <div className="navbar">
-            <a href="/" className="navbar_logo">LOGO IMAGE</a>
+            <a href="/" className="navbar_logo">WE-<span>HUB</span></a>
             <div className="navbar_links">
                 <a href="/" className=''>Home</a>
                 <a href="/#advert" className=''>Pricing</a>

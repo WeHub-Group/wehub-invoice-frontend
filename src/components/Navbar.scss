@@ -14,6 +14,11 @@
         cursor: pointer;
         text-decoration: none;
         color: $specialBlack;
+        font-size: 18px;
+
+        span {
+            color: $primaryColor;
+        }
 
         &:hover {
             @include scaleHoverAnimation;
