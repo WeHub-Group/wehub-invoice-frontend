@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaX } from "react-icons/fa6";
 
@@ -57,8 +57,8 @@ function NavLinks() {
 function NavButtons() {
     return (
         <div className="flex flex-col md:flex-row items-center gap-5">
-            <div className="md:border p-[10px_20px] rounded-lg border-darkPrimary text-darkPrimary font-poppins cursor-pointer">Login</div>
-            <div className="cursor-pointer font-poppins text-white p-[10px_20px] rounded-lg bg-darkPrimary">Sign Up</div>
+            <Link to={"/login"} className="p-[10px_20px] text-sm rounded-lg text-darkPrimary font-poppins cursor-pointer">Login</Link>
+            <Link to={"/signup"} className="cursor-pointer text-sm font-poppins text-white p-[10px_20px] rounded-lg bg-darkPrimary">Sign Up</Link>
         </div>
     )
 }
