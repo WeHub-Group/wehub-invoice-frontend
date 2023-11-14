@@ -11,7 +11,7 @@ const Navbar = () => {
         setIsOpen(!isOpen)
     }
     return (
-        <div className='h-auto bg-white z-50 w-full p-4 flex flex-wrap items-center justify-between sticky top-0'>
+        <div className='h-auto bg-white z-50 w-full p-3 flex flex-wrap items-center justify-between sticky top-0'>
 
             <NavLink reloadDocument className="text-black text-2xl md:text-3xl font-lato">
                 WE- <span className="text-darkPrimary">HUB</span>

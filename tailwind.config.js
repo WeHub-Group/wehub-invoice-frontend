@@ -20,7 +20,9 @@ export default {
         lato: "Lato",
         poppins: "Poppins"
       },
-      backgroundImage: {}
+      backgroundImage: {
+        heroPattern: "url('/src/assets/home_background.png')"
+      }
     },
   },
   plugins: [],
