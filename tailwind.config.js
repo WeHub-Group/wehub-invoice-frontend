@@ -5,7 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#90ff00",
+        darkPrimary: " #17E205",
+        primaryAccent: "#bcff66",
+        primaryLight: "#d3ff99",
+        specialBlack: "#141414",
+        specialWhite: "#fefdfd",
+        grey: "#dfdddd",
+        darkGrey: "#808080",
+      },
+      fontFamily: {
+        lato: "Lato",
+        poppins: "Poppins"
+      },
+      backgroundImage: {}
+    },
   },
   plugins: [],
 }
