@@ -1,4 +1,3 @@
-import './Testimonial.scss'
 
 const Testimonials = () => {
     return (
