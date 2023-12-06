@@ -48,11 +48,12 @@ function NavLinks() {
         <div className='text-2xl font- text-black flex flex-col justify-center md:flex-row gap-4 items-center'>
             <a className={navbarStyling} href="/#hero">Home</a>
             <a className={navbarStyling} href="/#pricing">Pricing</a>
-            <a className={navbarStyling} href="/#contactus">Contact Us</a>
             <a className={navbarStyling} href="/#features">Features</a>
+            <a className={navbarStyling} href="/#contactus">Contact Us</a>
         </div>
     )
 }
+
 
 function NavButtons() {
     return (

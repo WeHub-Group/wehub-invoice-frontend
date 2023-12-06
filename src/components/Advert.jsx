@@ -7,7 +7,7 @@ const Advert = () => {
         navigate('signup')
     }
     return (
-        <div className="bg-advertPattern h-[40vh] md:h-[60vh]  bg-center bg-cover flex flex-row p-2 md:p-5 items-center justify-center md:justify-between" id="advert">
+        <div className="bg-advertPattern h-[40vh] md:h-[60vh]  bg-center bg-cover flex flex-row p-2 md:p-5 items-center justify-center md:justify-between" id="pricing">
             <div className="flex flex-col gap-3 items-center md:items-start">
                 <p className='uppercase text-xl font-lato font-bold'>Payment</p>
                 <p className='font-lato md:text-2xl text-center md:text-start'>Generate your invoice now for free <br /> Making payments has been <br /> more easy </p>
