@@ -1,0 +1,14 @@
+@import '../styles/variables.scss';
+
+.testimonials {
+    height: 100vh;
+    padding: $padding;
+    background-color: $specialWhite;
+
+    &_header {
+        text-align: center;
+        font-size: 32px;
+        // text-transform: uppercase;
+        font-weight: 700;
+    }
+}
