@@ -1,7 +1,7 @@
-import chartSvg from '../assets/svg/chart-21.svg'
-import messageSvg from '../assets/svg/message.svg'
-import notificationSvg from '../assets/svg/notification.svg'
-import cloudSvg from '../assets/svg/cloud-plus.svg'
+import chartSvg from '../../assets/svg/chart-21.svg'
+import messageSvg from '../../assets/svg/message.svg'
+import notificationSvg from '../../assets/svg/notification.svg'
+import cloudSvg from '../../assets/svg/cloud-plus.svg'
 
 const Features = () => {
     return (
