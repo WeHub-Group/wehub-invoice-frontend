@@ -1,7 +1,7 @@
-import chartSvg from '../../assets/svg/chart-21.svg'
-import messageSvg from '../../assets/svg/message.svg'
-import notificationSvg from '../../assets/svg/notification.svg'
-import cloudSvg from '../../assets/svg/cloud-plus.svg'
+import chartSvg from '/assets/svg/chart-21.svg'
+import messageSvg from '/assets/svg/message.svg'
+import notificationSvg from '/assets/svg/notification.svg'
+import cloudSvg from '/assets/svg/cloud-plus.svg'
 
 const Features = () => {
     return (
@@ -9,7 +9,7 @@ const Features = () => {
 
             <div className="h-full w-full flex flex-col gap-3 justify-center">
                 <div className="flex flex-col gap-3">
-                    <p className="text-primary uppercase text-2xl text-center font-bold font-lato">Our Features</p>
+                    <p className="text-primary uppercase text-3xl text-center font-bold font-lato">Our Features</p>
                     <p className="text-center font-lato text-sm">Wehub Invoice generator helps you get paid on time. We <br></br>  provide multiple
                         payment
                         options that your customers <br></br> can choose from to make their payment securely.

@@ -21,8 +21,8 @@ export default {
         poppins: "Poppins"
       },
       backgroundImage: {
-        heroPattern: "url('/src/assets/images/home_background.png')",
-        advertPattern: "url('/src/assets/images/advert_background.png')"
+        heroPattern: "url('/assets/images/home_background.png')",
+        advertPattern: "url('/assets/images/advert_background.png')"
       }
     },
   },

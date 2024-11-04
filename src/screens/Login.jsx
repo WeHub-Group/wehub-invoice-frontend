@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import '../styles/login.scss'
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {

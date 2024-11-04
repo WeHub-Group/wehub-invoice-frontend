@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import '../styles/accountsetup.scss'
 import { useNavigate } from 'react-router-dom'
 
 const AccountSetup = () => {
