@@ -6,3 +6,7 @@
     font-family: 'Poppins';
     src: url('/assets/font/poppins.ttf');
 }
+
+.active {
+    @apply text-primary;
+}

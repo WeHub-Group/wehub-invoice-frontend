@@ -13,7 +13,7 @@ const Advert = () => {
                 <p className='font-lato md:text-2xl text-center md:text-start'>Generate your invoice now for free <br /> Making payments has been <br /> more easy </p>
                 <button className='bg-darkPrimary text-white font-lato cursor-pointer w-full rounded-lg p-[20px_40px] hover:scale-110 transition-all' onClick={goToSignup}>Generate Invoice</button>
             </div>
-            <img src="/src/assets/images/advert_card.png" className='hidden md:flex h-[80%] w-[36%]' />
+            <img src="/assets/images/advert_card.png" className='hidden md:flex h-[80%] w-[36%]' />
         </div >
     )
 }

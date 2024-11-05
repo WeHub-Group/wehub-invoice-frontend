@@ -15,7 +15,7 @@ const Footer = () => {
 
                 <div className="md:w-[50%]">
                     <div className="flex flex-col gap-3">
-                        <img src="/src/assets/images/wehub_logo.jpg" className='h-32 w-32 bg-gray-50 rounded-full self-center md:self-start' />
+                        <img src="/assets/images/wehub_logo.jpg" className='h-32 w-32 bg-gray-50 rounded-full self-center md:self-start' />
                         <h3 className='font-lato font-bold text-2xl' >WEHUB INVOICE GENERATOR</h3>
                     </div>
 
@@ -26,7 +26,7 @@ const Footer = () => {
 
                     <div className="flex flex-col mt-3">
                         <h4 className='font-bold font-lato text-center md:text-start'>Phone Number</h4>
-                        <h5 className='font-lato text-center md:text-start'>+234 704 400 0087</h5>
+                        <h5 className='font-lato text-center md:text-start'>+234 9064898590</h5>
                     </div>
                 </div>
 
@@ -41,7 +41,7 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3">
                 <hr className='' />
-                <div className="text-center text-lg  md:text-2xl">© 2023 WEHUB FREELANCE AGENCY</div>
+                <div className="text-center text-lg  md:text-2xl">© {Date.now()} WEHUB FREELANCE AGENCY</div>
             </div>
 
         </div>

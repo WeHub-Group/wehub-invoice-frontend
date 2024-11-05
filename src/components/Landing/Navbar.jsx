@@ -15,12 +15,10 @@ const Navbar = () => {
     return (
         <div className='h-auto bg-white z-50 w-full p-3 flex flex-wrap items-center justify-between sticky top-0'>
 
-            <motion.NavLink reloadDocument 
-            animate={{x:0,opacity:1}} 
-            initial={{x:-500,opacity:0}}
-             className="text-black text-2xl md:text-3xl font-lato">
+            <NavLink reloadDocument
+                className="text-black text-2xl md:text-3xl font-lato cursor-pointer">
                 WE- <span className="text-darkPrimary">HUB</span>
-            </motion.NavLink>
+            </NavLink>
 
 
 
@@ -64,8 +62,8 @@ function NavLinks() {
 function NavButtons() {
     return (
         <div className="flex flex-col md:flex-row items-center gap-5">
-            <Link to={"/login"} className="p-[10px_20px] text-sm rounded-lg text-darkPrimary font-poppins cursor-pointer">Login</Link>
-            <Link to={"/signup"} className="cursor-pointer text-sm font-poppins text-white p-[10px_20px] rounded-lg bg-darkPrimary">Sign Up</Link>
+            <Link to={"login"} className="p-[10px_20px] text-sm rounded-lg text-darkPrimary font-poppins cursor-pointer">Login</Link>
+            <Link to={"signup"} className="cursor-pointer text-sm font-poppins text-white p-[10px_20px] rounded-lg bg-darkPrimary">Sign Up</Link>
         </div>
     )
 }
