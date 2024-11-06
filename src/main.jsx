@@ -18,8 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
 
-      {/* <Route path='/' element={<LandingPage />} /> */}
-      <Route path='/' element={<ComingSoon />} />
+      <Route path='/' element={<LandingPage />} />
+      {/* <Route path='/' element={<ComingSoon />} /> */}
 
 
       <Route path='/login' element={<Login />} />

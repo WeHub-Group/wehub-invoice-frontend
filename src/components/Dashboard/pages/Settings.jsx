@@ -1,5 +1,3 @@
-import React from 'react'
-import Navbar from '../../Landing/Navbar'
 import { AiOutlineEdit } from 'react-icons/ai'
 
 const Settings = () => {

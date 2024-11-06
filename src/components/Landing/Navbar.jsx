@@ -15,10 +15,10 @@ const Navbar = () => {
     return (
         <div className='h-auto bg-white z-50 w-full p-3 flex flex-wrap items-center justify-between sticky top-0'>
 
-            <NavLink reloadDocument
+            <Link reloadDocument end
                 className="text-black text-2xl md:text-3xl font-lato cursor-pointer">
-                WE- <span className="text-darkPrimary">HUB</span>
-            </NavLink>
+                WE-<span className="text-darkPrimary">HUB</span>
+            </Link>
 
 
 
@@ -48,12 +48,13 @@ const Navbar = () => {
 
 function NavLinks() {
     const navbarStyling = "hover:scale-[1.1] hover:text-primary font-poppins text-[16px] cursor-pointer transition-all"
+
     return (
         <div className='text-2xl font- text-black flex flex-col justify-center md:flex-row gap-4 items-center'>
-            <NavLink className={navbarStyling} to="#hero">Home</NavLink>
-            <NavLink className={navbarStyling} to="/#pricing">Pricing</NavLink>
-            <NavLink className={navbarStyling} to="/#contactus">Contact Us</NavLink>
-            <NavLink className={navbarStyling} to="/#features">Features</NavLink>
+            <Link end className={navbarStyling} to="/">Home</Link>
+            <Link end className={navbarStyling} to="/#pricing">Pricing</Link>
+            <Link end className={navbarStyling} to="/#contactus">Contact Us</Link>
+            <Link end className={navbarStyling} to="/#features">Features</Link>
         </div>
     )
 }

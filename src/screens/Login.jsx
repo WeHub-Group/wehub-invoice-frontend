@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { TypeAnimation } from 'react-type-animation';
 import InputField from '../components/Authentication/InputField';
+import { motion } from 'framer-motion';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -14,6 +15,13 @@ const Login = () => {
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
             <div className="w-full relative">
+                <span className="flex items-center justify-center h-full w-full">
+                    <motion.img
+                        initial={{ x: -500, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 2, type: 'spring' }}
+                        src="/public/assets/svg/login.svg" className="w-1/2 h-3/4" alt="" />
+                </span>
                 <div className="absolute bottom-5 left-5 font-lato text-white">
                     <TypeAnimation
                         sequence={[
@@ -41,21 +49,27 @@ const Login = () => {
 
 
 
-                <div className="flex flex-col text-white">
+                <motion.div
+                    initial={{ y: -500, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 1, type: 'spring', delay: 1 }}
+                    className="flex flex-col text-white">
                     <h1 className="font-extrabold font-lato text-2xl">Log into your account</h1>
                     <h3 className="text-grey text-sm">Welcome back, let's go write some invoices and accept easy payments</h3>
 
-                    <form className="mt-5">
-                        <InputField type={'text'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <form
 
-                        <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} />
+                        className="mt-5">
+                        <InputField type={'text'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} dark={true} />
+
+                        <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} dark={true} />
 
                         <Link to={'#'} className="text-primary mt-5 font-lato text-sm">Forgot Password?</Link>
 
                         <button className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5">Log In</button>
                     </form>
 
-                </div>
+                </motion.div>
             </div>
         </div>
     )

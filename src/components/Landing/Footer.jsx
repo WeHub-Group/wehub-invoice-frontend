@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 const Footer = () => {
     const navigate = useNavigate()
 
+    const date = '2024';
 
     function goToSignup() {
         navigate("signup")
@@ -41,7 +42,7 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3">
                 <hr className='' />
-                <div className="text-center text-lg  md:text-2xl">© {Date.now()} WEHUB FREELANCE AGENCY</div>
+                <div className="text-center text-lg  md:text-2xl">© {date} WEHUB FREELANCE AGENCY</div>
             </div>
 
         </div>

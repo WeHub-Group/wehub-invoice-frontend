@@ -1,34 +1,41 @@
 
 const Testimonials = () => {
     return (
-        <div className="h-auto md:h-auto bg-white gap-2 p-2 md:p-5">
-            <div className="font-lato font-bold text-2xl md:text-3xl text-center">
-                WHAT OUR CLIENTS SAY
+        <section className="text-gray-600 body-font">
+            <div className="container px-5 py-24 mx-auto">
+                <div className="flex flex-wrap -m-4">
+                    <div className="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                        <div className="h-full text-center">
+                            <img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://dummyimage.com/302x302" />
+                            <p className="leading-relaxed">Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
+                            <span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                            <h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">HOLDEN CAULFIELD</h2>
+                            <p className="text-gray-500">Senior Product Designer</p>
+                        </div>
+                    </div>
+                    <div className="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                        <div className="h-full text-center">
+                            <img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://dummyimage.com/300x300" />
+                            <p className="leading-relaxed">Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
+                            <span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                            <h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">ALPER KAMU</h2>
+                            <p className="text-gray-500">UI Develeoper</p>
+                        </div>
+                    </div>
+                    <div className="lg:w-1/3 lg:mb-0 p-4">
+                        <div className="h-full text-center">
+                            <img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://dummyimage.com/305x305" />
+                            <p className="leading-relaxed">Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware.</p>
+                            <span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                            <h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">HENRY LETHAM</h2>
+                            <p className="text-gray-500">CTO</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div className="h-full flex flex-col gap-3 md:flex-row">
-                <TestimonialCards name={"Ronald Kelechi"} comment={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi illum beatae ipsum, dolorem, minima, eveniet voluptatem voluptas id nemo vel consequatur. Illum, veritatis dolore? Commodi praesentium impedit est dicta!"} image={'/src/assets/images/testimonial_1.png'} />
-
-                <TestimonialCards name={"Ronald Kelechi"} comment={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi illum beatae ipsum, dolorem, minima, eveniet voluptatem voluptas id nemo vel consequatur. Illum, veritatis dolore? Commodi praesentium impedit est dicta!"} image={'/src/assets/images/testimonial_1.png'} />
-
-                <TestimonialCards name={"Ronald Kelechi"} comment={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam nisi illum beatae ipsum, dolorem, minima, eveniet voluptatem voluptas id nemo vel consequatur. Illum, veritatis dolore? Commodi praesentium impedit est dicta!"} image={'/src/assets/images/testimonial_1.png'} />
-            </div>
-
-        </div>
+        </section>
     )
 }
 
-function TestimonialCards({ name, comment, image }) {
-    return (
-        <div className="h-[70%] md:h-screen w-full rounded-xl shadow-xl flex flex-col gap-2 justify-center items-center p-2">
-            <div className="w-32 h-32 md:w-48 md:h-48 flex justify-center items-center">
-                <img src={image} alt="" className="rounded-full h-full w-full self-center" />
-            </div>
-
-            <p className="font-lato font-bold text-2xl">{name}</p>
-            <p className="text-center text-sm font-lato">{comment}</p>
-        </div>
-    )
-}
 
 export default Testimonials

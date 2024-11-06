@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import InputField from "../components/Authentication/InputField"
 import { useState } from "react"
 import { TypeAnimation } from "react-type-animation";
+import { motion } from "framer-motion";
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -13,6 +14,14 @@ const Signup = () => {
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
             <div className="w-full relative">
+                <span className="flex items-center justify-center h-full w-full">
+                    <motion.img
+                        initial={{ x: -500, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 2, type: 'spring' }}
+                        src="/public/assets/svg/signup.svg" className="w-1/2 h-3/4" alt="" />
+                </span>
+
                 <div className="absolute bottom-5 left-5 font-lato text-white">
                     <TypeAnimation
                         sequence={[
@@ -39,23 +48,26 @@ const Signup = () => {
                 <Link to={'/login'} className="absolute top-5 right-5 text-primary font-lato">Login</Link>
 
 
-                <div className="flex flex-col text-white">
+                <motion.div initial={{ y: -500, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 1, type: 'spring', delay: 1 }}
+                    className="flex flex-col text-white">
                     <h1 className="font-extrabold font-lato text-2xl">Create an Account</h1>
                     <h3 className="text-grey text-sm">You are one step towards making swift payments and generating invoice instantly</h3>
 
                     <form className="mt-5">
-                        <InputField type={'text'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <InputField type={'text'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} dark={true} />
 
-                        <InputField type={'telephone'} placeholder={'+234 123456789'} label={'Phone Number'} value={telephone} onChange={(e) => setTelephone(e.target.value)} required />
+                        <InputField type={'telephone'} placeholder={'+234 123456789'} label={'Phone Number'} value={telephone} onChange={(e) => setTelephone(e.target.value)} required dark={true} />
 
-                        <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} required dark={true} />
 
                         <p className="text-sm mt-5">By creating an account you argree to all our <Link to={'#'} className="text-primary">Terms and Conditions</Link></p>
 
-                        <button onClick={() => { navigate('accountsetup') }} className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-3">Sign Up</button>
+                        <button type="submit" onClick={() => { navigate('accountsetup') }} className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-3">Sign Up</button>
                     </form>
 
-                </div>
+                </motion.div>
             </div>
         </div>
     )
