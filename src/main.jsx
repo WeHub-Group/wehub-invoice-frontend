@@ -12,6 +12,7 @@ import UserDasboard from './screens/UserDasboard'
 import ProtectedRoutes from './components/Authentication/ProtectedRoutes'
 import Sidebar from './components/Dashboard/Sidebar'
 import GenerateInvoice from './components/Dashboard/pages/GenerateInvoice'
+import Settings from './components/Dashboard/pages/Settings'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route index element={<h1>Home</h1>} />
         <Route path="generateinvoice" element={<GenerateInvoice />} />
         <Route path="myinvoice" element={<h1>My Invoices</h1>} />
+        <Route path="setting" element={<Settings />} />
       </Route>
 
 

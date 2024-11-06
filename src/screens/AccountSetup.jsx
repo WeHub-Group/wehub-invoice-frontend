@@ -51,6 +51,7 @@ const AccountSetup = () => {
                         <InputField type={'text'} placeholder={'Adamu'} label={'First Name'} required />
                         <InputField type={'text'} placeholder={'Bello'} label={'Last Name'} required />
                         <InputField type={'text'} placeholder={'Adamu Bello Cosmetics'} label={'Bussiness Name'} />
+                        <InputField type={'text'} placeholder={'Business Address'} label={'Address'} />
 
                         <button className="bg-white text-black w-full rounded-lg text-center font-lato p-2 font-extrabold mt-5" onClick={() => { navigate('/dashboard') }}>Proceed</button>
                     </form>

@@ -15,6 +15,7 @@ export default {
         specialWhite: "#fefdfd",
         grey: "#dfdddd",
         darkGrey: "#808080",
+        black: "#1e1e1e"
       },
       fontFamily: {
         lato: "Lato",
