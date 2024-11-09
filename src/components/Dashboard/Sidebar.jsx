@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 const Sidebar = () => {
     const linkStyle = "block py-4 px-6 text-sm text-white hover:bg-primary hover:text-black"
     return (
-        <div className="w-64 h-screen bg-black flex flex-col items-center py-8 relative">
+        <div className="w-64 min-h-screen bg-black flex flex-col items-center py-8 relative">
 
             <div className="my-8 w-16 h-16 flex flex-row gap-3 justify-center items-center">
                 <img src="/assets/images/wehub_logo.jpg" alt="" className='rounded-full' />

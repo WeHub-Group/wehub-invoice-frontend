@@ -3,12 +3,12 @@ import { Outlet } from 'react-router-dom'
 
 const UserDasboard = () => {
     return (
-        <div className="flex">
+        <div className="flex h-screen">
             <Sidebar />
             {/* <Sidebar /> */}
 
             {/* Main Content Area */}
-            <div className="flex-1">
+            <div className="flex-1 overflow-y-scroll">
                 <Outlet />
             </div>
         </div>

@@ -8,6 +8,10 @@ const AccountSetup = () => {
     const navigate = useNavigate()
     const [profilePicture, setProfilePicture] = useState()
 
+    function handleSubmit() {
+
+    }
+
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
             <div className="w-full relative">

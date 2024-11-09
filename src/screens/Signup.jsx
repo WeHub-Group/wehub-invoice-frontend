@@ -10,6 +10,9 @@ const Signup = () => {
     const [telephone, setTelephone] = useState('');
     const [password, setPassword] = useState('');
 
+    function handleSubmit() {
+        console.log(email, password, telephone);
+    }
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">

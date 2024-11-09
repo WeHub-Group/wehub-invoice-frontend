@@ -7,6 +7,10 @@
     src: url('/assets/font/poppins.ttf');
 }
 
+.button {
+    @apply bg-darkPrimary text-white rounded-lg p-3 hover:scale-110 transition-all w-40;
+}
+
 .active {
     @apply text-[#17E205];
 }

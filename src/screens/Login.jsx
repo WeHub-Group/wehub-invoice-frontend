@@ -9,7 +9,8 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    function formSubmit() {
+    function handleSubmit() {
+
     }
 
     return (
@@ -47,8 +48,6 @@ const Login = () => {
             <div className="w-full bg-black p-5 relative flex items-center">
                 <Link to={'/signup'} className="absolute top-5 right-5 text-primary font-lato">Sign Up</Link>
 
-
-
                 <motion.div
                     initial={{ y: -500, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -66,7 +65,7 @@ const Login = () => {
 
                         <Link to={'#'} className="text-primary mt-5 font-lato text-sm">Forgot Password?</Link>
 
-                        <button className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5">Log In</button>
+                        <button className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5" onClick={handleSubmit}>Log In</button>
                     </form>
 
                 </motion.div>
