@@ -29,6 +29,7 @@ const Sidebar = () => {
                     <NavLink to="logout" className={linkStyle}>Log Out</NavLink>
                 </li>
             </ul>
+
         </div>
     )
 }

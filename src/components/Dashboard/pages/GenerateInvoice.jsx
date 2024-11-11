@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import Card from '../../basic/Card'
 import InputField from '../../Authentication/InputField'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const GenerateInvoice = () => {
+    const navigate = useNavigate();
     const [itemName, setItemName] = useState('')
     const [itemRate, setItemRate] = useState('')
     const [itemQuantity, setItemQuantity] = useState(1)
@@ -11,7 +14,7 @@ const GenerateInvoice = () => {
 
     const [formData, setFormData] = useState({
         invoiceId: '',
-        billFrom: 'Ronald Kelechi',
+        billFrom: '',
         billTo: '',
         recipientEmail: '',
         recipientAddress: '',
@@ -48,7 +51,7 @@ const GenerateInvoice = () => {
         const date = new Date();
         let YYYY = date.getFullYear();
         let MM = date.getMonth();
-        let DD = date.getDay();
+        let DD = date.getDate();
         return `INV-${YYYY}${MM}${DD}-${part1}`
     }
     async function addToList() {
@@ -69,7 +72,9 @@ const GenerateInvoice = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form data:', formData);
+        console.log(formData);
+        // Validation
+        // Go to PDF Template screen then save invoice
     };
 
     return (
@@ -77,8 +82,8 @@ const GenerateInvoice = () => {
             <p className=''>Create new Invoice</p>
 
             {/* Format: INV-YYYYMMDD-001  */}
-            <div className="flex flex-row justify-between items-center">
-                <p className='text-2xl font-bold mt-3'>Invoice: <span className='text-darkPrimary font-normal'>
+            <div className="flex md:flex-row flex-col gap-3 justify-between items-center">
+                <p className='md:text-2xl text-xl font-bold mt-3'>Invoice: <span className='text-darkPrimary font-normal'>
                     {formData.invoiceId ? formData.invoiceId : 'INV-20241106-001'}
                 </span>
                 </p>
@@ -116,12 +121,12 @@ const GenerateInvoice = () => {
 
                 <div className="col-span-full flex flex-col mt-10">
 
-                    <form className="flex flex-row gap-2 justify-between ">
+                    <form className="flex flex-col md:flex-row gap-2 justify-between ">
                         <div className="flex-1">
                             <InputField type={'text'} placeholder={'Item'} label={'Item Name'} required value={itemName} onChange={(e) => { setItemName(e.target.value) }} />
                         </div>
 
-                        <div className="flex flex-row gap-5">
+                        <div className="flex md:flex-row flex-col gap-5">
                             <InputField type={'text'} placeholder={'100.00'} label={'Rate'} required value={itemRate} onChange={(e) => { setItemRate(e.target.value) }} />
                             <InputField type={'text'} placeholder={'1'} label={'Qty'}
                                 value={itemQuantity} onChange={(e) => { setItemQuantity(e.target.value) }} />
@@ -174,7 +179,9 @@ const GenerateInvoice = () => {
 
             </div>
 
-            <div className="bg-grey w-full p-1 font-lato"></div>
+            {/* <div className="bg-[rgba(0,0,0,0.4)] min-w-full h-screen font-lato absolute top-0 flex justify-center items-center">
+                <div className="bg-white h-"></div>
+            </div> */}
 
         </Card>
     )
