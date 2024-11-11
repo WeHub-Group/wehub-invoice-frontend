@@ -9,13 +9,13 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    function handleSubmit() {
-
+    function handleSubmit(e) {
+        e.preventDefault();
     }
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
-            <div className="w-full relative">
+            <div className="w-full relative md:flex hidden">
                 <span className="flex items-center justify-center h-full w-full">
                     <motion.img
                         initial={{ x: -500, opacity: 0 }}
@@ -56,14 +56,12 @@ const Login = () => {
                     <h1 className="font-extrabold font-lato text-2xl">Log into your account</h1>
                     <h3 className="text-grey text-sm">Welcome back, let's go write some invoices and accept easy payments</h3>
 
-                    <form
-
-                        className="mt-5">
+                    <form className="mt-5">
                         <InputField type={'text'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} dark={true} />
 
                         <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} dark={true} />
 
-                        <Link to={'#'} className="text-primary mt-5 font-lato text-sm">Forgot Password?</Link>
+                        <Link to={'forgotpassword'} className="text-primary mt-5 font-lato text-sm">Forgot Password?</Link>
 
                         <button className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5" onClick={handleSubmit}>Log In</button>
                     </form>

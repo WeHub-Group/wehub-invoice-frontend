@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import InputField from '../components/Authentication/InputField'
+import InputField from './InputField'
 import { TypeAnimation } from 'react-type-animation'
 import { Image } from '@iconsans/react/linear'
 
@@ -8,13 +8,13 @@ const AccountSetup = () => {
     const navigate = useNavigate()
     const [profilePicture, setProfilePicture] = useState()
 
-    function handleSubmit() {
-
+    function handleSubmit(e) {
+        e.preventDefault();
     }
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
-            <div className="w-full relative">
+            <div className="w-full relative md:flex hidden">
                 <div className="absolute bottom-5 left-5 font-lato text-white">
                     <TypeAnimation
                         sequence={[
@@ -57,7 +57,7 @@ const AccountSetup = () => {
                         <InputField type={'text'} placeholder={'Adamu Bello Cosmetics'} label={'Bussiness Name'} required dark={true} />
                         <InputField type={'text'} placeholder={'Business Address'} label={'Address'} dark={true} />
 
-                        <button className="bg-white text-black w-full rounded-lg text-center font-lato p-2 font-extrabold mt-5" onClick={() => { navigate('/dashboard') }}>Proceed</button>
+                        <button className="bg-white text-black w-full rounded-lg text-center font-lato p-2 font-extrabold mt-5" onClick={handleSubmit}>Proceed</button>
                     </form>
 
                 </div>

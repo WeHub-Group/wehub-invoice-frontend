@@ -10,13 +10,19 @@ const Signup = () => {
     const [telephone, setTelephone] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleSubmit() {
-        console.log(email, password, telephone);
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        // verify input
+        // Store user tokens
+        // 
+        navigate('accountsetup')
     }
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
-            <div className="w-full relative">
+
+            <div className="w-full relative md:flex hidden">
                 <span className="flex items-center justify-center h-full w-full">
                     <motion.img
                         initial={{ x: -500, opacity: 0 }}

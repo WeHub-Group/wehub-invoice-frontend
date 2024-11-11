@@ -3,21 +3,24 @@ import Card from '../../basic/Card'
 import InputField from '../../Authentication/InputField'
 
 const GenerateInvoice = () => {
-    const [formData, setFormData] = useState({
-        billTo: '',
-        billFrom: '',
-        recipientEmail: '',
-        recipientAddress: '',
-        title: '',
-        issuedOn: '',
-        dueDate: ''
-    });
-
     const [itemName, setItemName] = useState('')
     const [itemRate, setItemRate] = useState('')
     const [itemQuantity, setItemQuantity] = useState(1)
     const [itemList, setItemList] = useState([])
     let total = 0
+
+    const [formData, setFormData] = useState({
+        invoiceId: '',
+        billFrom: 'Ronald Kelechi',
+        billTo: '',
+        recipientEmail: '',
+        recipientAddress: '',
+        title: '',
+        issuedOn: '',
+        dueDate: '',
+        terms: '',
+        itemList
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,20 +29,27 @@ const GenerateInvoice = () => {
             [name]: value,
         }));
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form data:', formData);
-    };
-
-
-
     const toCurrencyFormat = (number) => {
         return number.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })
     }
     const calculateTotal = () => {
         return itemList.reduce((acc, item) => acc +
             (item.itemRate * item.itemQuantity), 0)
+    }
+    const generateRandomID = () => {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+        // Generate 3 random letters (A-Z)
+        let part1 = "";
+        for (let i = 0; i < 3; i++) {
+            part1 += letters[Math.floor(Math.random() * letters.length)];
+        }
+
+        const date = new Date();
+        let YYYY = date.getFullYear();
+        let MM = date.getMonth();
+        let DD = date.getDay();
+        return `INV-${YYYY}${MM}${DD}-${part1}`
     }
     async function addToList() {
         if (itemName === undefined || itemRate === undefined || itemName == '' || itemRate == '') {
@@ -49,42 +59,60 @@ const GenerateInvoice = () => {
             ...prevArray,
             { itemName, itemRate, itemQuantity },
         ]);
-        console.log(itemList);
+        setItemName('')
+        setItemRate('')
+    }
+    function generateInvoiceID() {
+        setFormData({ invoiceId: generateRandomID() })
     }
 
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form data:', formData);
+    };
 
     return (
         <Card>
             <p className=''>Create new Invoice</p>
+
             {/* Format: INV-YYYYMMDD-001  */}
             <div className="flex flex-row justify-between items-center">
-                <p className='text-2xl font-bold mt-3'>Invoice: <span className='text-darkPrimary font-normal'>#INV-20241106-001</span></p>
+                <p className='text-2xl font-bold mt-3'>Invoice: <span className='text-darkPrimary font-normal'>
+                    {formData.invoiceId ? formData.invoiceId : 'INV-20241106-001'}
+                </span>
+                </p>
 
-                <button className="bg-darkPrimary text-white rounded-lg p-3 hover:scale-110 transition-all">Generate</button>
+                <div className="flex gap-2">
+                    <button onClick={generateInvoiceID} className="bg-darkPrimary text-white rounded-lg p-3 hover:scale-110 transition-all"
+                    >Generate</button>
+
+                    <button className="bg-darkGrey text-white rounded-lg p-3 hover:scale-110 transition-all"
+                    >Clear All</button>
+                </div>
             </div>
 
             {/* Invoice Form */}
             <div className='grid grid-cols-2 mt-8 gap-x-10'>
-                <InputField name='billTo' value={formData.billTo} onChange={handleChange} type={'text'} placeholder={'Ahmadu Bello'} label={'Bill From'} required />
+                <InputField name='billFrom' value={formData.billFrom} onChange={handleChange} type={'text'} placeholder={'Ahmadu Bello'} label={'Bill From'} required />
 
-                <InputField type={'text'} placeholder={'Rasheed Ahmed'} label={'Bill To'} required />
+                <InputField type={'text'} placeholder={'Rasheed Ahmed'} label={'Bill To'} required name='billTo' value={formData.billTo} onChange={handleChange} />
 
                 <div className="col-span-full">
-                    <InputField type={'email'} placeholder={'Recipient Email'} label={'Recipient Email'} required />
+                    <InputField type={'email'} placeholder={'Recipient Email'} label={'Recipient Email'} required name='recipientEmail' value={formData.recipientEmail} onChange={handleChange} />
                 </div>
 
                 <div className="col-span-full">
-                    <InputField type={'text'} placeholder={'Recipient Address'} label={'Recipient Address'} required />
+                    <InputField type={'text'} placeholder={'Recipient Address'} label={'Recipient Address'} required name='recipientAddress' value={formData.recipientAddress} onChange={handleChange} />
                 </div>
 
                 <div className="col-span-full mt-10">
-                    <InputField type={'text'} placeholder={'Title'} label={'Project Title / Bill Title'} required />
+                    <InputField type={'text'} placeholder={'Title'} label={'Project Title / Bill Title'} required name='title' value={formData.title} onChange={handleChange} />
                 </div>
 
-                <InputField type={'date'} placeholder={'Issued On'} label={'Issued On'} required />
+                <InputField type={'date'} placeholder={'Issued On'} label={'Issued On'} required name='issuedOn' value={formData.issuedOn} onChange={handleChange} />
 
-                <InputField type={'date'} placeholder={'Due On'} label={'Due On'} required />
+                <InputField type={'date'} placeholder={'Due On'} label={'Due On'} required name='dueDate' value={formData.dueDate} onChange={handleChange} />
 
                 <div className="col-span-full flex flex-col mt-10">
 
@@ -137,7 +165,7 @@ const GenerateInvoice = () => {
                 </div>
 
                 <div className="col-span-full mt-10">
-                    <InputField type={'text'} placeholder={'Terms'} label={'Terms'} />
+                    <InputField type={'text'} placeholder={'Terms'} label={'Terms'} name='terms' value={formData.terms} onChange={handleChange} />
                 </div>
 
                 <div className="col-span-full flex justify-center mt-8">
@@ -145,6 +173,8 @@ const GenerateInvoice = () => {
                 </div>
 
             </div>
+
+            <div className="bg-grey w-full p-1 font-lato"></div>
 
         </Card>
     )

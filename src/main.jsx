@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import AccountSetup from './screens/AccountSetup'
+import AccountSetup from './components/Authentication/AccountSetup'
 import LandingPage from './screens/LandingPage'
 import Login from "./screens/Login";
 import Signup from './screens/Signup'
@@ -10,9 +10,9 @@ import NotfoundPage from './screens/NotfoundPage'
 import ComingSoon from './screens/ComingSoon'
 import UserDasboard from './screens/UserDasboard'
 import ProtectedRoutes from './components/Authentication/ProtectedRoutes'
-import Sidebar from './components/Dashboard/Sidebar'
 import GenerateInvoice from './components/Dashboard/pages/GenerateInvoice'
 import Settings from './components/Dashboard/pages/Settings'
+import ForgotPassword from './components/Authentication/ForgotPassword'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -22,7 +22,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       {/* <Route path='/' element={<ComingSoon />} /> */}
 
 
-      <Route path='/login' element={<Login />} />
+
+      <Route path='/login'>
+        <Route index element={<Login />} />
+        <Route path='forgotpassword' element={<ForgotPassword />} />
+      </Route>
 
       <Route path='signup' >
         <Route index element={<Signup />} />
@@ -37,7 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </Route>
 
 
-
+      {/* TODO: Configure Protected Routes */}
       <Route element={<ProtectedRoutes />}>
       </Route>
 
