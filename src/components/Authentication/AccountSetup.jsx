@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import InputField from './InputField'
 import { TypeAnimation } from 'react-type-animation'
 import { Image } from '@iconsans/react/linear'
 
 const AccountSetup = () => {
     const navigate = useNavigate()
+    const location = useLocation()
     const [profilePicture, setProfilePicture] = useState()
+
+    console.log(location.state);
 
     function handleSubmit(e) {
         e.preventDefault();

@@ -126,7 +126,7 @@ const GenerateInvoice = () => {
                             <InputField type={'text'} placeholder={'Item'} label={'Item Name'} required value={itemName} onChange={(e) => { setItemName(e.target.value) }} />
                         </div>
 
-                        <div className="flex md:flex-row flex-col gap-5">
+                        <div className="flex md:flex-row flex-col gap-3 md:gap-5">
                             <InputField type={'text'} placeholder={'100.00'} label={'Rate'} required value={itemRate} onChange={(e) => { setItemRate(e.target.value) }} />
                             <InputField type={'text'} placeholder={'1'} label={'Qty'}
                                 value={itemQuantity} onChange={(e) => { setItemQuantity(e.target.value) }} />

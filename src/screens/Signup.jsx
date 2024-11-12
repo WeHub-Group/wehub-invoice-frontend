@@ -3,20 +3,65 @@ import InputField from "../components/Authentication/InputField"
 import { useState } from "react"
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
+import validator, { isEmpty } from 'validator';
+import AlertBlinker from "../components/basic/AlertBlinker";
 
 const Signup = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [telephone, setTelephone] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState();
+
 
     function handleSubmit(e) {
         e.preventDefault();
 
         // verify input
-        // Store user tokens
-        // 
-        navigate('accountsetup')
+        if (validator.isEmpty(email)) {
+            AlertBlinker(
+                () => { setError('Email Cannot be Empty') },
+                () => { setError() }
+            )
+            return false;
+        }
+        if (validator.isEmpty(telephone)) {
+            AlertBlinker(
+                () => { setError('Telephone Cannot be Empty') },
+                () => { setError() }
+            )
+            return false;
+        }
+        if (validator.isEmpty(password)) {
+            AlertBlinker(
+                () => { setError('Password Cannot be Empty') },
+                () => { setError() }
+            )
+            return false;
+        }
+        if (!validator.isEmail(email)) {
+            AlertBlinker(
+                () => { setError('Email is not a valid must include "@"') },
+                () => { setError() }
+            )
+            return false;
+        }
+        if (!validator.isMobilePhone(telephone)) {
+            AlertBlinker(
+                () => { setError('Phone Number is not a valid telephone number') },
+                () => { setError() }
+            )
+            return false;
+        }
+        if (password.length < 8) {
+            AlertBlinker(
+                () => { setError('Password is not less than 8') },
+                () => { setError() }
+            )
+            return false;
+        }
+        const user = { email, telephone, password }
+        navigate('accountsetup', { state: { user } })
     }
 
     return (
@@ -65,16 +110,27 @@ const Signup = () => {
                     <h3 className="text-grey text-sm">You are one step towards making swift payments and generating invoice instantly</h3>
 
                     <form className="mt-5">
-                        <InputField type={'text'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} dark={true} />
+                        <InputField type={'email'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} dark={true} />
 
                         <InputField type={'telephone'} placeholder={'+234 123456789'} label={'Phone Number'} value={telephone} onChange={(e) => setTelephone(e.target.value)} required dark={true} />
 
-                        <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} required dark={true} />
+                        <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} required dark={true} minLength={8} />
 
                         <p className="text-sm mt-5">By creating an account you argree to all our <Link to={'#'} className="text-primary">Terms and Conditions</Link></p>
 
-                        <button type="submit" onClick={() => { navigate('accountsetup') }} className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-3">Sign Up</button>
+                        <button type="submit" onClick={handleSubmit} className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-3">Sign Up</button>
+
+                        {error &&
+                            <motion.div
+                                initial={{ x: 500, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ duration: 1, type: 'spring' }}
+                                className=" text-red-500 font-lato p-3 text-sm mt-3">
+                                {error}
+                            </motion.div>
+                        }
                     </form>
+
 
                 </motion.div>
             </div>
