@@ -3,69 +3,60 @@ import InputField from "../components/Authentication/InputField"
 import { useState } from "react"
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
-import validator, { isEmpty } from 'validator';
-import AlertBlinker from "../components/basic/AlertBlinker";
+import validator from 'validator';
+import { account, ID } from "../appwrite/appwrite.config";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/ReactToastify.css'
+import Button from "../components/basic/Button";
 
 const Signup = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [telephone, setTelephone] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState();
+    const [error, setError] = useState("");
+    Button.changeStatus(false)
 
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         // verify input
         if (validator.isEmpty(email)) {
-            AlertBlinker(
-                () => { setError('Email Cannot be Empty') },
-                () => { setError() }
-            )
-            return false;
+            setError('Email cannot be blank')
         }
         if (validator.isEmpty(telephone)) {
-            AlertBlinker(
-                () => { setError('Telephone Cannot be Empty') },
-                () => { setError() }
-            )
-            return false;
+            setError('Telephone cannot be empty')
         }
         if (validator.isEmpty(password)) {
-            AlertBlinker(
-                () => { setError('Password Cannot be Empty') },
-                () => { setError() }
-            )
-            return false;
+            setError('Password cannot be blank')
         }
         if (!validator.isEmail(email)) {
-            AlertBlinker(
-                () => { setError('Email is not a valid must include "@"') },
-                () => { setError() }
-            )
-            return false;
+            setError('Email must be a valid email')
         }
         if (!validator.isMobilePhone(telephone)) {
-            AlertBlinker(
-                () => { setError('Phone Number is not a valid telephone number') },
-                () => { setError() }
-            )
-            return false;
+            setError('Phone number is not a valid phone Number')
         }
         if (password.length < 8) {
-            AlertBlinker(
-                () => { setError('Password is not less than 8') },
-                () => { setError() }
-            )
-            return false;
+            setError('Password cannot be less than 8 characters')
         }
-        const user = { email, telephone, password }
-        navigate('accountsetup', { state: { user } })
+        else {
+            Button.changeStatus(true)
+            setError("")
+            await account.create(ID.unique(), email, password)
+                .then((result) => {
+                    navigate('accountsetup', { state: { $id: result.$id, telephone: telephone } })
+                }).catch((err) => {
+                    toast.error("Error")
+                    console.log(err);
+                    Button.changeStatus(false)
+                });
+        }
     }
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
+            <ToastContainer position='top-right' />
 
             <div className="w-full relative md:flex hidden">
                 <span className="flex items-center justify-center h-full w-full">
@@ -118,20 +109,19 @@ const Signup = () => {
 
                         <p className="text-sm mt-5">By creating an account you argree to all our <Link to={'#'} className="text-primary">Terms and Conditions</Link></p>
 
-                        <button type="submit" onClick={handleSubmit} className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-3">Sign Up</button>
+                        <Button type='submit' id={'myButton'} onClick={handleSubmit} defaultText={'SignUp'} className='bg-white text-black w-full rounded-lg font-lato p-3 font-extrabold mt-5 flex justify-center text-center' />
 
                         {error &&
                             <motion.div
                                 initial={{ x: 500, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: 500, opacity: 0 }}
                                 transition={{ duration: 1, type: 'spring' }}
                                 className=" text-red-500 font-lato p-3 text-sm mt-3">
                                 {error}
                             </motion.div>
                         }
                     </form>
-
-
                 </motion.div>
             </div>
         </div>

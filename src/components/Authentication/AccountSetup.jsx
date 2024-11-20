@@ -2,21 +2,45 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import InputField from './InputField'
 import { TypeAnimation } from 'react-type-animation'
-import { Image } from '@iconsans/react/linear'
+import db from '../../appwrite/database.appwrite'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/ReactToastify.css'
 
 const AccountSetup = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const [profilePicture, setProfilePicture] = useState()
+    const [firstname, setFirstame] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [businessName, setBusinessName] = useState('')
+    const [businessAddress, setBusinessAddress] = useState('')
 
-    console.log(location.state);
-
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+        const payload = {
+            userId: location.state.$id,
+            firstname: firstname,
+            lastname: lastname,
+            phoneNumber: location.state.telephone,
+            businessName: businessName,
+            businessAddress: businessAddress,
+        }
+        console.log(payload);
+
+        await db.users.create(payload)
+            .then((result) => {
+                toast.success('Successfully added to DB')
+                navigate('/dashboard')
+            }).catch((err) => {
+                toast.error('Error')
+                console.log(err);
+            });
     }
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
+            <ToastContainer position='top-right' />
+
             <div className="w-full relative md:flex hidden">
                 <div className="absolute bottom-5 left-5 font-lato text-white">
                     <TypeAnimation
@@ -55,10 +79,13 @@ const AccountSetup = () => {
                             }} /> */}
                         </div>
 
-                        <InputField type={'text'} placeholder={'Adamu'} label={'First Name'} required dark={true} />
-                        <InputField type={'text'} placeholder={'Bello'} label={'Last Name'} required dark={true} />
-                        <InputField type={'text'} placeholder={'Adamu Bello Cosmetics'} label={'Bussiness Name'} required dark={true} />
-                        <InputField type={'text'} placeholder={'Business Address'} label={'Address'} dark={true} />
+                        <InputField type={'text'} placeholder={'Adamu'} label={'First Name'} required dark={true} value={firstname} onChange={({ target }) => setFirstame(target.value)} />
+
+                        <InputField type={'text'} placeholder={'Bello'} label={'Last Name'} required dark={true} value={lastname} onChange={({ target }) => setLastname(target.value)} />
+
+                        <InputField type={'text'} placeholder={'Adamu Bello Cosmetics'} label={'Bussiness Name'} required dark={true} value={businessName} onChange={({ target }) => setBusinessName(target.value)} />
+
+                        <InputField type={'text'} placeholder={'Business Address'} label={'Address'} dark={true} value={businessAddress} onChange={({ target }) => setBusinessAddress(target.value)} />
 
                         <button className="bg-white text-black w-full rounded-lg text-center font-lato p-2 font-extrabold mt-5" onClick={handleSubmit}>Proceed</button>
                     </form>

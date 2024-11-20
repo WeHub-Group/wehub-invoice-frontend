@@ -3,15 +3,48 @@ import { Link, useNavigate } from "react-router-dom";
 import { TypeAnimation } from 'react-type-animation';
 import InputField from '../components/Authentication/InputField';
 import { motion } from 'framer-motion';
+import { account } from '../appwrite/appwrite.config';
+import validator from 'validator';
+import Button from '../components/basic/Button';
 
 const Login = () => {
+    const [loggedInUser, setLoggedInUser] = useState(null);
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState('');
+    Button.changeStatus(false)
 
-    function handleSubmit(e) {
+
+    async function handleSubmit(e) {
         e.preventDefault();
+
+
+        // Verify Input
+        if (validator.isEmpty(email)) {
+            setError('Email cannot be blank')
+        }
+        if (validator.isEmpty(password)) {
+            setError('Password cannot be blank')
+        }
+        if (!validator.isEmail(email)) {
+            setError('Email must be a valid email')
+        }
+        if (password.length < 8) {
+            setError('Password cannot be less than 8 characters')
+        }
+        else {
+            Button.changeStatus(true)
+            await account.createEmailPasswordSession(email, password)
+                .then((result) => {
+                    navigate('/dashboard')
+                }).catch((err) => {
+                    Button.changeStatus(false)
+                    console.log(err);
+                });
+        }
     }
+
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
@@ -63,7 +96,17 @@ const Login = () => {
 
                         <Link to={'forgotpassword'} className="text-primary mt-5 font-lato text-sm">Forgot Password?</Link>
 
-                        <button className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5" onClick={handleSubmit}>Log In</button>
+                        <Button className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5 flex justify-center" defaultText={'Log In'} onClick={handleSubmit} />
+                        {error &&
+                            <motion.div
+                                initial={{ x: 500, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: 500, opacity: 0 }}
+                                transition={{ duration: 1, type: 'spring' }}
+                                className=" text-red-500 font-lato p-3 text-sm mt-3">
+                                {error}
+                            </motion.div>
+                        }
                     </form>
 
                 </motion.div>

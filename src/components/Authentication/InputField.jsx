@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 const InputField = ({ value, placeholder, error, onChange, type, label, dark, ...props }) => {
   return (
     <div className="mt-3 flex flex-col gap-2">
@@ -14,4 +14,5 @@ const InputField = ({ value, placeholder, error, onChange, type, label, dark, ..
     </div>
   )
 }
+
 export default InputField
