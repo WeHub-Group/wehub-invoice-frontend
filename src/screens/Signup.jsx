@@ -64,7 +64,7 @@ const Signup = () => {
                         initial={{ x: -500, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 2, type: 'spring' }}
-                        src="/public/assets/svg/signup.svg" className="w-1/2 h-3/4" alt="" />
+                        src="/assets/svg/signup.svg" className="w-1/2 h-3/4" alt="" />
                 </span>
 
                 <div className="absolute bottom-5 left-5 font-lato text-white">
