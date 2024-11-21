@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { account } from '../appwrite/appwrite.config';
 import validator from 'validator';
 import Button from '../components/basic/Button';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useState(null);
@@ -40,6 +41,7 @@ const Login = () => {
                     navigate('/dashboard')
                 }).catch((err) => {
                     Button.changeStatus(false)
+                    toast.error('Error')
                     console.log(err);
                 });
         }
@@ -48,6 +50,7 @@ const Login = () => {
 
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
+            <ToastContainer position='top-right' />
             <div className="w-full relative md:flex hidden">
                 <span className="flex items-center justify-center h-full w-full">
                     <motion.img
