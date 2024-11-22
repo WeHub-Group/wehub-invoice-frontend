@@ -4,15 +4,13 @@ import InputField from './InputField'
 import { TypeAnimation } from 'react-type-animation'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/ReactToastify.css'
-import upload from '../../appwrite/storage.appwrite'
 import getImage from '../basic/FileToImage';
 import db from '../../appwrite/database.appwrite';
-import { button } from 'framer-motion/client'
 import Button from '../basic/Button';
 import validator from 'validator'
 import { motion } from 'framer-motion';
 import InputImageCircleView from '../basic/InputImageCircleView';
-
+import { upload } from '../../appwrite/storage.appwrite';
 
 
 const AccountSetup = () => {

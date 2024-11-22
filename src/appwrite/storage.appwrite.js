@@ -1,5 +1,4 @@
 import { storage, ID } from "./appwrite.config";
-
 const bucketId = import.meta.env.VITE_BUCKET_ID;
 const uniqueId = ID.unique();
 
