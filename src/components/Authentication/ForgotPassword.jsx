@@ -1,8 +1,9 @@
-import React from 'react'
 
 const ForgotPassword = () => {
     return (
-        <div>ForgotPassword</div>
+        <div className="flex p-16 bg-black">
+
+        </div>
     )
 }
 

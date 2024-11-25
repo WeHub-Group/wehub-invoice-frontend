@@ -34,17 +34,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='accountsetup' element={<AccountSetup />} />
       </Route>
 
-      <Route path='/dashboard' element={<UserDasboard />}>
-        <Route index element={<h1>Home</h1>} />
-        <Route path="generateinvoice" element={<GenerateInvoice />} />
-        <Route path='generateinvoice/template' element={<PDFTemplate />} />
-        <Route path="myinvoice" element={<h1>My Invoices</h1>} />
-        <Route path="setting" element={<Settings />} />
-      </Route>
-
-
-      {/* TODO: Configure Protected Routes */}
       <Route element={<ProtectedRoutes />}>
+        <Route path='/dashboard' element={<UserDasboard />}>
+          <Route index element={<h1>Home</h1>} />
+          <Route path="generateinvoice" element={<GenerateInvoice />} />
+          <Route path='generateinvoice/template' element={<PDFTemplate />} />
+          <Route path="myinvoice" element={<h1>My Invoices</h1>} />
+          <Route path="setting" element={<Settings />} />
+        </Route>
       </Route>
 
       <Route path='*' element={<NotfoundPage />} />

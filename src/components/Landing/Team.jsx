@@ -12,6 +12,7 @@ const Team = () => {
 
                 <div className="flex flex-wrap -m-2">
                     <TeamItemLayout name='Ronald Kelechi' position='Senior Fullstack Developer' />
+                    <TeamItemLayout name='Divine Williams' position='Python Developer' />
                     <TeamItemLayout name='Gift Jackson' position='Frontend Developer' />
                     <TeamItemLayout name='Joshua Umahi' position='Frontend Developer' />
                     <TeamItemLayout name='Opeoluwa ' position='Backend Developer' />

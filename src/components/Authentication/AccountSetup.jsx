@@ -65,7 +65,7 @@ const AccountSetup = () => {
                         userId: location.state.$id,
                         firstname: firstname,
                         lastname: lastname,
-                        profilePicId: result.$id,
+                        profilePicUrl: result,
                         phoneNumber: location.state.telephone,
                         businessName: businessName,
                         businessAddress: businessAddress,
@@ -93,6 +93,13 @@ const AccountSetup = () => {
             <ToastContainer position='top-right' />
 
             <div className="w-full relative md:flex hidden">
+                <span className="flex items-center justify-center h-full w-full">
+                    <motion.img
+                        initial={{ x: -500, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 2, type: 'spring' }}
+                        src="/assets/svg/account-setup.svg" className="w-1/2 h-3/4" alt="" />
+                </span>
                 <div className="absolute bottom-5 left-5 font-lato text-white">
                     <TypeAnimation
                         sequence={[
