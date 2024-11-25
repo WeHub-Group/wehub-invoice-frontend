@@ -44,7 +44,7 @@ function NavLinks() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, type: 'spring' }}
             className='text-2xl font-lato mt-2 text-white flex flex-col justify-center md:flex-row gap-4 items-center'>
-            <NavLink end to="/dashboard" className={navbarStyling}>Dashboard</NavLink>
+            <NavLink to="/dashboard" className={navbarStyling}>Dashboard</NavLink>
             <NavLink to="generateinvoice" className={navbarStyling}>Generate Invoice</NavLink>
             <NavLink to="myinvoice" className={navbarStyling}>My Invoice</NavLink>
             <NavLink to="setting" className={navbarStyling}>Settings</NavLink>

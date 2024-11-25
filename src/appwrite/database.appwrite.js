@@ -1,3 +1,4 @@
+import { Query } from "appwrite";
 import { databases, ID } from "./appwrite.config";
 
 const db = {}
@@ -19,6 +20,12 @@ collections.forEach((col) => {
                 id,
                 payload
             ),
+        getUserDetails: (userId) =>
+            databases.listDocuments(
+                col.dbId,
+                col.id,
+                [Query.equal('userId', userId)]
+            )
 
     }
 })

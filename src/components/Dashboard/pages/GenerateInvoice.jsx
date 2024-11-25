@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '../../basic/Card';
 import InputField from '../../Authentication/InputField';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { Trash } from '@iconsans/react/linear';
+import isEmail from 'validator/lib/isEmail';
+import { account } from '../../../appwrite/appwrite.config';
+import getUserId from '../../../appwrite/account.appwrite';
+import db from '../../../appwrite/database.appwrite';
+import { isEmpty } from 'validator';
 
 const GenerateInvoice = () => {
     const [itemName, setItemName] = useState('');
@@ -13,15 +18,43 @@ const GenerateInvoice = () => {
     const [formData, setFormData] = useState({
         invoiceId: '',
         profielPicUrl: "",
-        billFrom: '',
-        billTo: '',
+        senderName: '',
+        senderEmail: '',
+        senderAddress: '',
+        recipientName: '',
         recipientEmail: '',
         recipientAddress: '',
         billTitle: '',
         issuedOn: '',
         dueDate: '',
         terms: '',
+        tax: '',
+        itemList: []
     });
+
+    // Fetch User current Details and all that
+    useEffect(() => {
+        const fetchUser = async () => {
+            const user = await getUserId();
+            if (user.userId) {
+                db.users.getUserDetails(user.userId)
+                    .then(({ documents }) => {
+                        setFormData({
+                            senderEmail: user.userEmail,
+                            senderName: documents[0].businessName,
+                            senderAddress: documents[0].businessAddress,
+                            profielPicUrl: documents[0]?.profilePicUrl
+                        })
+                    }).catch((err) => {
+                        console.error("Error", err);
+                        toast.error('Failed to fetch user Details')
+                    });
+            }
+        };
+        fetchUser();
+    }, [])
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,7 +79,6 @@ const GenerateInvoice = () => {
         const YYYYMMDD = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`;
         return `INV-${YYYYMMDD}-${randomLetters}`;
     };
-
     const addToList = () => {
         if (!itemName || !itemRate) {
             toast.error('Cannot add empty item');
@@ -57,29 +89,97 @@ const GenerateInvoice = () => {
         setItemRate('');
         setItemQuantity(1);
     };
-
     const deleteItem = (index) => {
         setItemList((prevList) => prevList.filter((_, i) => i !== index));
     };
-
     const clearAll = () => {
         setFormData({
             invoiceId: '',
-            billFrom: '',
-            billTo: '',
+            recipientName: '',
             recipientEmail: '',
             recipientAddress: '',
-            title: '',
+            billTitle: '',
             issuedOn: '',
             dueDate: '',
             terms: '',
+            tax: '',
+            itemList: [],
         });
         setItemList([]);
     };
+
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ ...formData, itemList });
-        // Add validation logic and navigation here
+        setFormData({ itemList: itemList })
+
+        // Validation should go here
+        // if (isEmpty(formData.invoiceId)) {
+        //     toast.error("Invoice ID is required")
+        //     return;
+        // }
+        if (isEmpty(formData.senderName)) {
+            toast.error("Sender Name is required!");
+            return;
+        }
+        if (isEmpty(formData.senderEmail)) {
+            toast.error("Sender Email is required!");
+            return;
+        }
+        if (!isEmail(formData.senderEmail)) {
+            toast.error("Sender Email is invalid!");
+            return;
+        }
+        if (isEmpty(formData.recipientName)) {
+            toast.error("Recipient Name is required!");
+            return;
+        }
+        if (isEmpty(formData.recipientEmail)) {
+            toast.error("Recipient Email is required!");
+            return;
+        }
+        if (!isEmail(formData.recipientEmail)) {
+            toast.error("Recipient Email is invalid!");
+            return;
+        }
+        if (isEmpty(formData.billTitle)) {
+            toast.error("Bill Title is required!");
+            return;
+        }
+        if (isEmpty(formData.issuedOn)) {
+            toast.error("Issued On date is required!");
+            return;
+        }
+        if (isEmpty(formData.dueDate)) {
+            toast.error("Due Date is required!");
+            return;
+        }
+
+        // Validate dates
+        const issuedDate = new Date(formData.issuedOn);
+        const dueDate = new Date(formData.dueDate);
+        if (issuedDate > dueDate) {
+            toast.error("Due Date cannot be earlier than Issued On date!");
+            return;
+        }
+
+        // Validate item list
+        if (itemList.length === 0) {
+            toast.error("At least one item must be added to the invoice!");
+            return;
+        }
+        const invalidItemIndex = itemList.findIndex(
+            (item) => isEmpty(item.itemName) || item.itemRate <= 0 || item.itemQuantity <= 0
+        );
+        if (invalidItemIndex !== -1) {
+            toast.error(`Invalid item found at position ${invalidItemIndex + 1}!`);
+            return;
+        }
+
+        // Move to Invoice Template Page
+        console.log();
+
     };
 
     return (
@@ -107,15 +207,23 @@ const GenerateInvoice = () => {
 
             {/* Form Inputs */}
             <div className="grid grid-cols-2 mt-8 gap-x-10">
-                <InputField name="billFrom" value={formData.billFrom} onChange={handleChange} type="text" placeholder="Ahmadu Bello" label="Bill From" required />
+                <img src={formData.profielPicUrl}
+                    className="rounded-full w-32 h-32 bg-gray-300 border-2 border-black" />
+                <div className=""></div>
 
-                <InputField name="billTo" value={formData.billTo} onChange={handleChange} type="text" placeholder="Rasheed Ahmed" label="Bill To" required />
+                <InputField name="senderName" value={formData.senderName} type="text" placeholder="Ahmadu Bello" label="Sender Name" required />
 
-                <div className="col-span-full">
-                    <InputField name="recipientEmail" value={formData.recipientEmail} onChange={handleChange} type="email" placeholder="Recipient Email" label="Recipient Email" required />
+                <InputField name="senderEmail" value={formData.senderEmail} type="text" placeholder="Ahmadu Bello" label="Sender Email" required />
+
+                <div className="col-span-full mb-10">
+                    <InputField name="senderAddress" value={formData.senderAddress} onChange={handleChange} type="text" placeholder="Address" label="Sender Address" required />
                 </div>
 
-                <div className="col-span-full">
+                <InputField name="recipientName" value={formData.recipientName} onChange={handleChange} type="text" placeholder="Rasheed Ahmed" label="Recipient Name" required />
+
+                <InputField name="recipientEmail" value={formData.recipientEmail} onChange={handleChange} type="email" placeholder="Recipient Email" label="Recipient Email" required />
+
+                <div className="col-span-full mb-10">
                     <InputField name="recipientAddress" value={formData.recipientAddress} onChange={handleChange} type="text" placeholder="Recipient Address" label="Recipient Address" required />
                 </div>
 
@@ -167,7 +275,9 @@ const GenerateInvoice = () => {
                     </div>
                 </div>
 
-                <InputField name="terms" value={formData.terms} onChange={handleChange} type="text" placeholder="Terms" label="Terms" className="col-span-full mt-10" />
+                <div className="col-span-full">
+                    <InputField name="terms" value={formData.terms} onChange={handleChange} type="text" placeholder="Terms" label="Terms" />
+                </div>
 
                 <div className="col-span-full flex justify-center mt-8">
                     <button onClick={handleSubmit} className="button">
