@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { TypeAnimation } from 'react-type-animation';
 import InputField from '../components/Authentication/InputField';
 import { motion } from 'framer-motion';
@@ -15,6 +15,8 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState('');
     Button.changeStatus(false)
+    const User = localStorage.getItem('cookieFallback')
+
 
 
     async function handleSubmit(e) {
@@ -48,8 +50,10 @@ const Login = () => {
     }
 
 
-    return (
-        <div className="w-screen h-screen flex flex-row bg-black">
+    return User ?
+        <Navigate to={'/dashboard'} />
+        :
+        < div className="w-screen h-screen flex flex-row bg-black" >
             <ToastContainer position='top-right' />
             <div className="w-full relative md:flex hidden">
                 <span className="flex items-center justify-center h-full w-full">
@@ -114,8 +118,7 @@ const Login = () => {
 
                 </motion.div>
             </div>
-        </div>
-    )
+        </div >
 }
 
 export default Login

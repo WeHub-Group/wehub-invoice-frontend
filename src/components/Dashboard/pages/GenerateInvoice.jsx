@@ -5,52 +5,55 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { Trash } from '@iconsans/react/linear';
 import isEmail from 'validator/lib/isEmail';
-import { account } from '../../../appwrite/appwrite.config';
 import getUserId from '../../../appwrite/account.appwrite';
 import db from '../../../appwrite/database.appwrite';
 import { isEmpty } from 'validator';
+import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const GenerateInvoice = () => {
+    const navigate = useNavigate()
     const [itemName, setItemName] = useState('');
     const [itemRate, setItemRate] = useState('');
     const [itemQuantity, setItemQuantity] = useState(1);
     const [itemList, setItemList] = useState([]);
     const [formData, setFormData] = useState({
-        invoiceId: '',
+        invoiceId: "",
         profielPicUrl: "",
-        senderName: '',
-        senderEmail: '',
-        senderAddress: '',
-        recipientName: '',
-        recipientEmail: '',
-        recipientAddress: '',
-        billTitle: '',
-        issuedOn: '',
-        dueDate: '',
-        terms: '',
-        tax: '',
+        senderName: "",
+        senderEmail: "",
+        senderAddress: "",
+        recipientName: "",
+        recipientEmail: "",
+        recipientAddress: "",
+        billTitle: "",
+        issuedOn: "",
+        dueDate: "",
+        terms: "",
+        tax: "",
         itemList: []
     });
 
-    // Fetch User current Details and all that
+    const fetchUser = async () => {
+        const user = await getUserId();
+        if (user.userId) {
+            db.users.getUserDetails(user.userId)
+                .then(({ documents }) => {
+                    setFormData({
+                        ...formData,
+                        senderEmail: user.userEmail,
+                        senderName: documents[0].businessName,
+                        senderAddress: documents[0].businessAddress,
+                        profielPicUrl: documents[0]?.profilePicUrl
+                    })
+                }).catch((err) => {
+                    console.error("Error", err);
+                    toast.error('Failed to fetch user Details')
+                });
+        }
+    };
     useEffect(() => {
-        const fetchUser = async () => {
-            const user = await getUserId();
-            if (user.userId) {
-                db.users.getUserDetails(user.userId)
-                    .then(({ documents }) => {
-                        setFormData({
-                            senderEmail: user.userEmail,
-                            senderName: documents[0].businessName,
-                            senderAddress: documents[0].businessAddress,
-                            profielPicUrl: documents[0]?.profilePicUrl
-                        })
-                    }).catch((err) => {
-                        console.error("Error", err);
-                        toast.error('Failed to fetch user Details')
-                    });
-            }
-        };
         fetchUser();
     }, [])
 
@@ -104,55 +107,47 @@ const GenerateInvoice = () => {
             terms: '',
             tax: '',
             itemList: [],
-        });
+        }
+        );
         setItemList([]);
     };
 
 
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        setFormData({ itemList: itemList })
+        setFormData({ ...formData, itemList })
+        console.log(formData);
+
 
         // Validation should go here
-        // if (isEmpty(formData.invoiceId)) {
-        //     toast.error("Invoice ID is required")
-        //     return;
-        // }
-        if (isEmpty(formData.senderName)) {
-            toast.error("Sender Name is required!");
-            return;
+        if (isEmpty(formData.invoiceId || '')) {
+            toast.error("Invoice ID is required")
+            return false;
         }
-        if (isEmpty(formData.senderEmail)) {
-            toast.error("Sender Email is required!");
-            return;
-        }
-        if (!isEmail(formData.senderEmail)) {
-            toast.error("Sender Email is invalid!");
-            return;
-        }
-        if (isEmpty(formData.recipientName)) {
+        if (isEmpty(formData.recipientName || '')) {
             toast.error("Recipient Name is required!");
-            return;
+            return false;
         }
-        if (isEmpty(formData.recipientEmail)) {
-            toast.error("Recipient Email is required!");
-            return;
-        }
-        if (!isEmail(formData.recipientEmail)) {
+        if (!isEmail(formData.recipientEmail || '')) {
             toast.error("Recipient Email is invalid!");
-            return;
+            return false;
         }
-        if (isEmpty(formData.billTitle)) {
+        if (isEmpty(formData.billTitle || '')) {
             toast.error("Bill Title is required!");
-            return;
+            return false;
         }
-        if (isEmpty(formData.issuedOn)) {
+        if (isEmpty(formData.issuedOn || '')) {
             toast.error("Issued On date is required!");
-            return;
+            return false;
         }
-        if (isEmpty(formData.dueDate)) {
+        if (isEmpty(formData.dueDate || '')) {
             toast.error("Due Date is required!");
+            return false;
+        }
+        if (formData.itemList?.length === 0) {
+            toast.error('Item List is empty try adding items again')
             return;
         }
 
@@ -161,24 +156,27 @@ const GenerateInvoice = () => {
         const dueDate = new Date(formData.dueDate);
         if (issuedDate > dueDate) {
             toast.error("Due Date cannot be earlier than Issued On date!");
-            return;
+            return false;
         }
 
-        // Validate item list
-        if (itemList.length === 0) {
-            toast.error("At least one item must be added to the invoice!");
-            return;
+        else {
+            console.log(formData);
+            confirmAlert({
+                title: 'Do you want to generate the Invoice?',
+                buttons: [
+                    {
+                        label: 'Yes',
+                        className: 'bg-green-500',
+                        onClick: () => navigate('template', { state: formData }),
+                    },
+                    {
+                        label: 'No',
+                        onClick: () => { },
+                        className: 'bg-red-500'
+                    }
+                ]
+            });
         }
-        const invalidItemIndex = itemList.findIndex(
-            (item) => isEmpty(item.itemName) || item.itemRate <= 0 || item.itemQuantity <= 0
-        );
-        if (invalidItemIndex !== -1) {
-            toast.error(`Invalid item found at position ${invalidItemIndex + 1}!`);
-            return;
-        }
-
-        // Move to Invoice Template Page
-        console.log();
 
     };
 
@@ -207,16 +205,16 @@ const GenerateInvoice = () => {
 
             {/* Form Inputs */}
             <div className="grid grid-cols-2 mt-8 gap-x-10">
-                <img src={formData.profielPicUrl}
+                <img src={formData.profielPicUrl || 'https://via.placeholder.com/150'}
                     className="rounded-full w-32 h-32 bg-gray-300 border-2 border-black" />
                 <div className=""></div>
 
-                <InputField name="senderName" value={formData.senderName} type="text" placeholder="Ahmadu Bello" label="Sender Name" required />
+                <InputField name="senderName" value={formData.senderName} type="text" placeholder="Ahmadu Bello" label="Sender Name" required readOnly />
 
-                <InputField name="senderEmail" value={formData.senderEmail} type="text" placeholder="Ahmadu Bello" label="Sender Email" required />
+                <InputField name="senderEmail" value={formData.senderEmail} type="text" placeholder="Ahmadu Bello" label="Sender Email" required readOnly />
 
                 <div className="col-span-full mb-10">
-                    <InputField name="senderAddress" value={formData.senderAddress} onChange={handleChange} type="text" placeholder="Address" label="Sender Address" required />
+                    <InputField name="senderAddress" value={formData.senderAddress} readOnly type="text" placeholder="Address" label="Sender Address" required />
                 </div>
 
                 <InputField name="recipientName" value={formData.recipientName} onChange={handleChange} type="text" placeholder="Rasheed Ahmed" label="Recipient Name" required />
@@ -263,7 +261,7 @@ const GenerateInvoice = () => {
                             <p>{toCurrencyFormat(item.itemRate)}</p>
                             <p className="flex justify-between items-center">
                                 {toCurrencyFormat(item.itemRate * item.itemQuantity)}
-                                <Trash onClick={() => deleteItem(index)} className="text-red-500 hover:scale-105 hover:rotate-12 text-xl transition-all ml-3" />
+                                <Trash onClick={() => deleteItem(index)} className="text-red-500 hover:scale-105 hover:rotate-45 text-xl transition-all ml-3 cursor-pointer" />
                             </p>
                         </div>
                     ))}
@@ -275,8 +273,20 @@ const GenerateInvoice = () => {
                     </div>
                 </div>
 
-                <div className="col-span-full">
-                    <InputField name="terms" value={formData.terms} onChange={handleChange} type="text" placeholder="Terms" label="Terms" />
+                <div className="col-span-full mt-10">
+                    <div className="mt-3 flex flex-col gap-2">
+                        <label className="font-bold">Terms</label>
+                        <textarea
+                            name="terms"
+                            value={formData.terms}
+                            onChange={handleChange}
+                            type="text"
+                            placeholder="Terms"
+                            label="Terms"
+                            rows={4}
+                            className={"bg-transparent text-sm border border-black text-black rounded-lg p-3 hover:scale-105 transition-all flex-1"}  >
+                        </textarea>
+                    </div>
                 </div>
 
                 <div className="col-span-full flex justify-center mt-8">
