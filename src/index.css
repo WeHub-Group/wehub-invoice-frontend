@@ -14,3 +14,14 @@
 .active {
     @apply text-[#17E205];
 }
+
+@layer base{ img {display: initial;}}
+@media print {
+    .pdf-content {
+      width: 794px;
+      height: 1123px;
+      margin: 0;
+      padding: 0;
+      page-break-inside: avoid;
+    }
+  }

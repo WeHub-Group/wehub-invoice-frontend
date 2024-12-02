@@ -6,11 +6,11 @@ import 'react-toastify/ReactToastify.css';
 import { Trash } from '@iconsans/react/linear';
 import isEmail from 'validator/lib/isEmail';
 import getUserId from '../../../appwrite/account.appwrite';
-import db from '../../../appwrite/database.appwrite';
 import { isEmpty } from 'validator';
 import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { getUser } from '../../../api/database.api';
 
 const GenerateInvoice = () => {
     const navigate = useNavigate()
@@ -37,15 +37,16 @@ const GenerateInvoice = () => {
 
     const fetchUser = async () => {
         const user = await getUserId();
-        if (user.userId) {
-            db.users.getUserDetails(user.userId)
-                .then(({ documents }) => {
+
+        if (user) {
+            getUser(user.userEmail)
+                .then(({ data }) => {
                     setFormData({
                         ...formData,
-                        senderEmail: user.userEmail,
-                        senderName: documents[0].businessName,
-                        senderAddress: documents[0].businessAddress,
-                        profielPicUrl: documents[0]?.profilePicUrl
+                        senderEmail: data.email,
+                        senderName: data.businessName,
+                        senderAddress: data.businessAddress,
+                        profielPicUrl: data?.profilePicUrl
                     })
                 }).catch((err) => {
                     console.error("Error", err);
@@ -240,7 +241,7 @@ const GenerateInvoice = () => {
                     <form className="flex flex-row w-full justify-between">
                         <InputField value={itemName} onChange={(e) => setItemName(e.target.value)} type="text" placeholder="Item" label="Item Name" required />
                         <InputField value={itemRate} onChange={(e) => setItemRate(e.target.value)} type="text" placeholder="100.00" label="Rate" required />
-                        <InputField value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} type="text" placeholder="1" label="Qty" required />
+                        <InputField value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} type="number" placeholder="1" label="Qty" required />
                     </form>
 
                     <button onClick={addToList} className="bg-darkPrimary text-white rounded-lg p-3 hover:scale-110 transition-all w-40 mt-3">

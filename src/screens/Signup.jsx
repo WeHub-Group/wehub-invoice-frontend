@@ -45,7 +45,13 @@ const Signup = () => {
             setError("")
             await account.create(ID.unique(), email, password)
                 .then((result) => {
-                    navigate('accountsetup', { state: { $id: result.$id, telephone: telephone } })
+                    account.createEmailPasswordSession(email, password)
+                        .then((result) => {
+                            navigate('accountsetup', { state: { $id: result.$id, telephone: telephone } })
+                        }).catch((err) => {
+                            console.log(err);
+
+                        });
                 }).catch((err) => {
                     toast.error("Error")
                     console.log(err);

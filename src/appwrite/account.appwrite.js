@@ -6,6 +6,10 @@ const getUserId = async () => {
         const userId = user.$id;
         const userEmail = user.email;
 
+        console.log(user);
+
+        
+
         return { userId, userEmail };
     } catch (error) {
         console.error("Error fetching user details:", error.message);

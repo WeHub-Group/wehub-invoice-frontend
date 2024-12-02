@@ -14,7 +14,7 @@ import GenerateInvoice from './components/Dashboard/pages/GenerateInvoice'
 import Settings from './components/Dashboard/pages/Settings'
 import ForgotPassword from './components/Authentication/ForgotPassword'
 import DashboardHome from './components/Dashboard/pages/DashboardHome';
-import InvoiceTemplate from './components/Dashboard/pages/InvoiceTemplate'
+import InvoiceTemplate from './components/Dashboard/pages/templates/InvoiceTemplate'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>

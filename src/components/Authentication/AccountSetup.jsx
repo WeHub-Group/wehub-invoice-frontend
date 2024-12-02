@@ -5,12 +5,13 @@ import { TypeAnimation } from 'react-type-animation'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/ReactToastify.css'
 import getImage from '../basic/FileToImage';
-import db from '../../appwrite/database.appwrite';
 import Button from '../basic/Button';
 import validator from 'validator'
 import { motion } from 'framer-motion';
 import InputImageCircleView from '../basic/InputImageCircleView';
 import { upload } from '../../appwrite/storage.appwrite';
+import getUserId from '../../appwrite/account.appwrite'
+import addUserToDB from '../../api/database.api'
 
 
 const AccountSetup = () => {
@@ -33,8 +34,10 @@ const AccountSetup = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        const user = await getUserId();
+        console.log(user);
 
-        // TODO:Verify Input
+
         if (validator.isEmpty(firstname) || firstname.length < 2) {
             setError('Firstname cannot be blank or less than 2')
             return false;
@@ -55,8 +58,6 @@ const AccountSetup = () => {
             setError('Please upload your company Logo')
             return false;
         }
-
-
         else {
             Button.changeStatus(true)
             await upload(profilePic)
@@ -65,21 +66,22 @@ const AccountSetup = () => {
                         userId: location.state.$id,
                         firstname: firstname,
                         lastname: lastname,
+                        email: user.userEmail,
                         profilePicUrl: result,
                         phoneNumber: location.state.telephone,
                         businessName: businessName,
                         businessAddress: businessAddress,
                     }
-                    await db.users.create(payload)
+
+                    addUserToDB(payload)
                         .then((result) => {
-                            toast.success('Successfully added to DB')
+                            console.log(result);
                             navigate('/dashboard')
-                        }).catch((err) => {
-                            toast.error('Error')
-                            console.log(err)
-                            Button.changeStatus(false)
+                        }).catch(({ response }) => {
+                            console.log(response);
+                            toast.error(response.data.message)
                         });
-                    toast.success('successful')
+
                 }).catch((err) => {
                     toast.error('Error Uploading Profile Picture')
                     console.log(err)
@@ -87,6 +89,8 @@ const AccountSetup = () => {
                 });
         }
     }
+
+
 
     return (
         <div className="w-screen flex flex-row bg-black">
@@ -128,7 +132,7 @@ const AccountSetup = () => {
                     <h1 className="font-extrabold font-lato text-2xl">Welcome, Let's get your setup</h1>
                     <h3 className="text-grey text-sm">Please fill in the details to complete your account setup</h3>
 
-                    <form className="mt-3">
+                    <form className="mt-1">
 
                         <div className="mt-3 flex flex-col gap-2">
                             <InputImageCircleView image={image} handleImageChange={handleImageChange} />
