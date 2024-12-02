@@ -47,7 +47,7 @@ const Signup = () => {
                 .then((result) => {
                     account.createEmailPasswordSession(email, password)
                         .then((result) => {
-                            navigate('accountsetup', { state: { $id: result.$id, telephone: telephone } })
+                            navigate('accountsetup', { state: { telephone: telephone } })
                         }).catch((err) => {
                             console.log(err);
 

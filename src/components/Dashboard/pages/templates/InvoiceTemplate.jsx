@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import Button from "../../../basic/Button";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import db from "../../../../appwrite/database.appwrite";
+import { addInvoiceToDB } from "../../../../api/database.api";
 
 
 const InvoiceTemplate = () => {
@@ -13,7 +13,6 @@ const InvoiceTemplate = () => {
     const location = useLocation();
     const [invoice, setInvoice] = useState({
         invoiceId: "",
-        userId: "",
         profielPicUrl: "",
         senderName: "",
         senderEmail: "",
@@ -45,18 +44,23 @@ const InvoiceTemplate = () => {
         );
 
     const handleSave = async () => {
-        const invoices = await db.invoices.getAllInvoices();
-        console.log(invoices.documents[0]);
-
+        addInvoiceToDB(invoice)
+            .then((result) => {
+                console.log(result);
+                toast.success('Your PDF has been Saved')
+                setIsSaved(true)
+            }).catch(({ response }) => {
+                toast.error(response.data.message)
+            });
     };
 
     const handleDiscard = () => {
         confirmAlert({
-            title: "Do you want to discard this Invoice?",
+            title: `Do you want to ${isSaved ? 'Go back?' : 'Discard this Invoice?'}`,
             buttons: [
                 {
                     label: "Yes",
-                    onClick: () => { <Navigate to={''} /> },
+                    onClick: () => { <Navigate to={'/dashboard'} /> },
                 },
                 {
                     label: "No",
@@ -88,7 +92,7 @@ const InvoiceTemplate = () => {
             <div className="p-8 bg-gray-200 flex flex-col justify-center min-h-screen font-lato">
                 {/* Invoice Here */}
 
-                <div className="flex flex-col" ref={targetRef}>
+                <div className="flex flex-col rounded-lg" ref={targetRef}>
                     <div className="bg-white flex-1 flex flex-col p-8">
                         {/* Invoice Header */}
                         <div className="flex justify-between items-center">
@@ -172,7 +176,7 @@ const InvoiceTemplate = () => {
                 <div className="flex justify-center mt-8 gap-4">
                     <Button
                         className="bg-red-500 text-white px-4 py-2 rounded hover:scale-105 transition-all"
-                        defaultText={"Discard"}
+                        defaultText={isSaved ? 'Go back' : 'Discard'}
                         onClick={handleDiscard}
                     />
                     <Button

@@ -148,7 +148,7 @@ const GenerateInvoice = () => {
             return false;
         }
         if (formData.itemList?.length === 0) {
-            toast.error('Item List is empty try adding items again')
+            toast.error('Item List is empty try Generating again')
             return;
         }
 

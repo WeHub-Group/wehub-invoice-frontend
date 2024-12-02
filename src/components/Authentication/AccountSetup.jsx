@@ -35,7 +35,6 @@ const AccountSetup = () => {
     async function handleSubmit(e) {
         e.preventDefault();
         const user = await getUserId();
-        console.log(user);
 
 
         if (validator.isEmpty(firstname) || firstname.length < 2) {
@@ -63,7 +62,6 @@ const AccountSetup = () => {
             await upload(profilePic)
                 .then(async (result) => {
                     const payload = {
-                        userId: location.state.$id,
                         firstname: firstname,
                         lastname: lastname,
                         email: user.userEmail,
