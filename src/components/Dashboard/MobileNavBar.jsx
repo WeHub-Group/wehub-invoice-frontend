@@ -14,7 +14,7 @@ const MobileNavbar = () => {
     return (
         <div className='h-auto bg-black z-50 w-full p-3 flex flex-wrap items-center justify-between sticky top-0'>
 
-            <Link reloadDocument end
+            <Link reloadDocument
                 className="text-white text-2xl md:text-3xl font-lato cursor-pointer">
                 Welcome 👋
             </Link>

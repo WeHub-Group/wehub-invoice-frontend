@@ -20,9 +20,6 @@ const Sidebar = () => {
                     <NavLink to="generateinvoice" className={linkStyle}>Generate Invoice</NavLink>
                 </li>
                 <li className="w-full">
-                    <NavLink to="myinvoice" className={linkStyle}>My Invoice</NavLink>
-                </li>
-                <li className="w-full">
                     <NavLink to="setting" className={linkStyle}>Settings</NavLink>
                 </li>
                 <li className="w-full">

@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../basic/Button";
 import { toast, ToastContainer } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { addInvoiceToDB } from "../../../../api/database.api";
+import { toCurrencyFormat } from "../../../basic/toCurrency";
 
 
 const InvoiceTemplate = () => {
     const targetRef = useRef();
     const location = useLocation();
+    const navigate = useNavigate();
     const [invoice, setInvoice] = useState({
         invoiceId: "",
         profielPicUrl: "",
@@ -33,9 +35,6 @@ const InvoiceTemplate = () => {
             setInvoice(location.state);
         }
     }, []);
-
-    const toCurrencyFormat = (number) =>
-        number.toLocaleString("en-US", { style: "currency", currency: "NGN" });
 
     const calculateTotal = () =>
         invoice.itemList.reduce(
@@ -60,7 +59,7 @@ const InvoiceTemplate = () => {
             buttons: [
                 {
                     label: "Yes",
-                    onClick: () => { <Navigate to={'/dashboard'} /> },
+                    onClick: () => { navigate('/dashboard') },
                 },
                 {
                     label: "No",
@@ -167,7 +166,7 @@ const InvoiceTemplate = () => {
 
                     {/* Footer */}
                     <div className="bg-black text-white font-lato py-3 flex items-center justify-center">
-                        <p>Generate using <span className="text-darkPrimary">WEHUB INVOICE GENERATOR</span></p>
+                        <p>Generated using <span className="text-darkPrimary">WEHUB INVOICE GENERATOR</span></p>
                     </div>
                 </div>
 

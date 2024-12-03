@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route index element={<DashboardHome />} />
           <Route path="generateinvoice" element={<GenerateInvoice />} />
           <Route path='generateinvoice/template' element={<InvoiceTemplate />} />
-          <Route path="myinvoice" element={<h1>My Invoices</h1>} />
+          <Route path="logout" element={<h1>Logout</h1>} />
           <Route path="setting" element={<Settings />} />
         </Route>
 
