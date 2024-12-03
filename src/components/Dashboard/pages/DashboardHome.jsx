@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { getUser } from '../../../api/database.api';
 import getUserId from '../../../appwrite/account.appwrite';
-import { toast } from 'react-toastify';
-import { Trash } from '@iconsans/react/linear';
-import { FaFileInvoice } from 'react-icons/fa'
-import { p } from 'framer-motion/client';
+import { toast, ToastContainer } from 'react-toastify';
 import { toCurrencyFormat } from '../../basic/toCurrency';
+import 'react-toastify/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardHome = () => {
+    const navigate = useNavigate()
     const [user, setUser] = useState({
         firstname: '',
         lastname: '',
@@ -26,9 +26,12 @@ const DashboardHome = () => {
             getUser(user.userEmail)
                 .then(({ data }) => {
                     setUser(data)
-                }).catch((err) => {
-                    console.error("Error", err);
+                }).catch(({ response }) => {
+                    console.error("Error", response);
                     toast.error('Failed to fetch user Details')
+                    if (response.status === 404) {
+                        navigate('/signup')
+                    }
                 });
         }
     };
@@ -58,6 +61,7 @@ const DashboardHome = () => {
 
     return (
         <div className="h-screen font-lato">
+            <ToastContainer position='top-right' />
 
             {/* Navbar */}
             <div className="bg-black flex-1 flex flex-row items-center p-3">

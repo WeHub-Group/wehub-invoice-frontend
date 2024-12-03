@@ -51,6 +51,9 @@ const GenerateInvoice = () => {
                 }).catch((err) => {
                     console.error("Error", err);
                     toast.error('Failed to fetch user Details')
+                    if (response.status === 404) {
+                        navigate('/signup')
+                    }
                 });
         }
     };

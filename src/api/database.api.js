@@ -25,4 +25,8 @@ export const deleteInvoice = (payload) => {
     return axios.delete(`${apiUrl}/invoice`, payload);
 }
 
+// Chage Invoice status
+export const changeInvoiceStatus = (payload) => {
+    return axios.put(`${apiUrl}/invoice/${payload}`);
+}
 export default addUserToDB
