@@ -7,12 +7,12 @@ const Team = () => {
 
                 <div className="flex flex-col text-center w-full mb-20">
                     <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>
-                    <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Meet the team looking forward and building what seems to be the best Invoice generator.</p>
+                    <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Meet the team at Wehub Studios.</p>
                 </div>
 
                 <div className="flex flex-wrap -m-2">
                     <TeamItemLayout name='Ronald Kelechi' position='Senior Fullstack Developer' />
-                    <TeamItemLayout name='Divine Williams' position='Python Developer' />
+                    <TeamItemLayout name='Divine Williams' position='Project Manager' />
                     <TeamItemLayout name='Gift Jackson' position='Frontend Developer' />
                     <TeamItemLayout name='Joshua Umahi' position='Frontend Developer' />
                     <TeamItemLayout name='Opeoluwa ' position='Backend Developer' />

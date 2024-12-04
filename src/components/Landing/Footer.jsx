@@ -42,7 +42,7 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3">
                 <hr className='' />
-                <div className="text-center text-lg  md:text-2xl">© {date} WEHUB FREELANCE AGENCY</div>
+                <div className="text-center text-lg">© {date} WEHUB FREELANCE AGENCY</div>
             </div>
 
         </div>

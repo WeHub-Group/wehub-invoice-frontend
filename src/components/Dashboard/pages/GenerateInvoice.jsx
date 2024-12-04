@@ -187,16 +187,16 @@ const GenerateInvoice = () => {
     return (
         <Card>
             <ToastContainer position="top-right" />
-            <p className="font-bold">Create New Invoice</p>
+            <p className="font-bold md:text-lg">Create New Invoice</p>
 
             {/* Invoice ID */}
             <div className="flex md:flex-row flex-col gap-3 justify-between items-center">
-                <p className="md:text-2xl text-xl font-bold mt-3">
-                    Invoice:{' '}
-                    <span className="text-darkPrimary font-normal">
+                <p className="md:text-2xl text-lg font-bold mt-3">
+                    Invoice: <span className="text-darkPrimary font-normal">
                         {formData.invoiceId || 'INV-YYYYMMDD-001'}
                     </span>
                 </p>
+
                 <div className="flex gap-2">
                     <button onClick={() => setFormData({ ...formData, invoiceId: generateRandomID() })} className="bg-darkPrimary text-white rounded-lg p-3 hover:scale-110 transition-all">
                         Generate
@@ -210,7 +210,7 @@ const GenerateInvoice = () => {
             {/* Form Inputs */}
             <div className="grid grid-cols-2 mt-8 gap-x-10">
                 <img src={formData.profielPicUrl || 'https://via.placeholder.com/150'}
-                    className="rounded-full w-32 h-32 bg-gray-300 border-2 border-black" />
+                    className="rounded-full w-32 h-32 bg-gray-300 border-2 border-black " />
                 <div className=""></div>
 
                 <InputField name="senderName" value={formData.senderName} type="text" placeholder="Ahmadu Bello" label="Sender Name" required readOnly />

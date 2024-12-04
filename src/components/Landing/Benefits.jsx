@@ -6,7 +6,7 @@ const Benefits = () => {
         <section className="text-gray-600 body-font" id='features'>
             <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-                    <h1 className="sm:text-5xl text-3xl font-medium title-font mb-2 text-specialBlack">Why Choose {document.title}?</h1>
+                    <h1 className="sm:text-5xl text-3xl font-medium title-font mb-2 text-specialBlack">Why Choose Wehub Invoice Generator?</h1>
                     <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">Here are some benefits of using the WeHub Invoice Generator</p>
                 </div>
 

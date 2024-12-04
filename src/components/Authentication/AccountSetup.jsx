@@ -73,10 +73,8 @@ const AccountSetup = () => {
 
                     addUserToDB(payload)
                         .then((result) => {
-                            console.log(result);
                             navigate('/dashboard')
                         }).catch(({ response }) => {
-                            console.log(response);
                             toast.error(response.data.message)
                         });
 
