@@ -5,23 +5,18 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const location = useLocation()
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
+
     const linkStyle = "block py-4 px-6 text-sm text-white hover:bg-primary hover:text-black"
-
-    useEffect(() => {
-        setIsOpen(false)
-    }, [location])
-
 
     return (
         <div>
             {/* Toggle Button */}
             <button
-                className={`p-4 text-black bg-primary rounded-md fixed top-3 left-3 z-50 ${isOpen ? 'border-white border' : ''}`}
+                className={`p-4 text-black bg-primary rounded-md fixed top-3 left-3 z-[52] ${isOpen ? 'border-white border' : ''}`}
                 onClick={toggleSidebar}
             >
 
