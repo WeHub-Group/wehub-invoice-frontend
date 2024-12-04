@@ -18,36 +18,40 @@ import InvoiceTemplate from './components/Dashboard/pages/templates/InvoiceTempl
 import { Analytics } from "@vercel/analytics/react"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Analytics />,
-  <BrowserRouter>
-    <Routes>
+  <>
+    <Analytics />
 
-      <Route path='/' element={<LandingPage />} />
-      {/* <Route path='/' element={<ComingSoon />} /> */}
+    <BrowserRouter>
+      <Routes>
 
-      <Route path='/login'>
-        <Route index element={<Login />} />
-        <Route path='forgotpassword' element={<ForgotPassword />} />
-      </Route>
+        <Route path='/' element={<LandingPage />} />
+        {/* <Route path='/' element={<ComingSoon />} /> */}
 
-      <Route path='signup' >
-        <Route index element={<Signup />} />
-        <Route path='accountsetup' element={<AccountSetup />} />
-      </Route>
-
-      <Route element={<ProtectedRoutes />}>
-
-        <Route path='/dashboard' element={<UserDasboard />}>
-          <Route index element={<DashboardHome />} />
-          <Route path="generateinvoice" element={<GenerateInvoice />} />
-          <Route path='generateinvoice/template' element={<InvoiceTemplate />} />
-          <Route path="logout" element={<h1>Logout</h1>} />
-          <Route path="setting" element={<Settings />} />
+        <Route path='/login'>
+          <Route index element={<Login />} />
+          <Route path='forgotpassword' element={<ForgotPassword />} />
         </Route>
 
-      </Route>
+        <Route path='signup' >
+          <Route index element={<Signup />} />
+          <Route path='accountsetup' element={<AccountSetup />} />
+        </Route>
 
-      <Route path='*' element={<NotfoundPage />} />
-    </Routes>
-  </BrowserRouter>,
+        <Route element={<ProtectedRoutes />}>
+
+          <Route path='/dashboard' element={<UserDasboard />}>
+            <Route index element={<DashboardHome />} />
+            <Route path="generateinvoice" element={<GenerateInvoice />} />
+            <Route path='generateinvoice/template' element={<InvoiceTemplate />} />
+            <Route path="logout" element={<h1>Logout</h1>} />
+            <Route path="setting" element={<Settings />} />
+          </Route>
+
+        </Route>
+
+        <Route path='*' element={<NotfoundPage />} />
+      </Routes>
+    </BrowserRouter>
+  </>
+  ,
 )
