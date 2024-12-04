@@ -1,16 +1,15 @@
 import { account } from "./appwrite.config";
 
-const getUserId = async () => {
+const getuserEmail = async () => {
     try {
         const user = await account.get();
-        const userId = user.$id;
         const userEmail = user.email;
 
-        return { userId, userEmail };
+        return { userEmail };
     } catch (error) {
         console.error("Error fetching user details:", error.message);
         return null;
     }
 };
 
-export default getUserId;
+export default getuserEmail;

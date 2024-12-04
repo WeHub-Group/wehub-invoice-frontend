@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import InputField from "../components/Authentication/InputField"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import validator from 'validator';
@@ -8,14 +8,30 @@ import { account, ID } from "../appwrite/appwrite.config";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/ReactToastify.css'
 import Button from "../components/basic/Button";
+import { getUser } from "../api/database.api";
+import getuserEmail from "../appwrite/account.appwrite";
 
 const Signup = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
-    const [telephone, setTelephone] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState("");
     Button.changeStatus(false)
+
+    async function checkHasSetup() {
+        const user = await getuserEmail();
+        getUser(user.userEmail)
+            .then(({ data }) => {
+            }).catch(({ response }) => {
+                if (response.status === 404) {
+                    navigate('accountsetup')
+                }
+            });
+    }
+
+    useEffect(() => {
+        checkHasSetup()
+    }, [])
 
 
     async function handleSubmit(e) {
@@ -25,18 +41,13 @@ const Signup = () => {
         if (validator.isEmpty(email)) {
             setError('Email cannot be blank')
         }
-        if (validator.isEmpty(telephone)) {
-            setError('Telephone cannot be empty')
-        }
         if (validator.isEmpty(password)) {
             setError('Password cannot be blank')
         }
         if (!validator.isEmail(email)) {
             setError('Email must be a valid email')
         }
-        if (!validator.isMobilePhone(telephone)) {
-            setError('Phone number is not a valid phone Number')
-        }
+
         if (password.length < 8) {
             setError('Password cannot be less than 8 characters')
         }
@@ -44,18 +55,17 @@ const Signup = () => {
             Button.changeStatus(true)
             setError("")
             await account.create(ID.unique(), email, password)
-                .then((result) => {
+                .then(() => {
                     account.createEmailPasswordSession(email, password)
-                        .then((result) => {
-                            navigate('accountsetup', { state: { telephone: telephone } })
+                        .then(() => {
+                            navigate('accountsetup')
                         }).catch((err) => {
                             console.log(err);
-
                         });
                 }).catch((err) => {
                     toast.error("Error")
-                    console.log(err);
                     Button.changeStatus(false)
+                    console.log(err);
                 });
         }
     }
@@ -108,8 +118,6 @@ const Signup = () => {
 
                     <form className="mt-5">
                         <InputField type={'email'} placeholder={'Email123@gmail.com'} label={'Email'} required value={email} onChange={(e) => setEmail(e.target.value)} dark={true} />
-
-                        <InputField type={'telephone'} placeholder={'+234 123456789'} label={'Phone Number'} value={telephone} onChange={(e) => setTelephone(e.target.value)} required dark={true} />
 
                         <InputField type={'password'} placeholder={'Password'} label={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} required dark={true} minLength={8} />
 

@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { Trash } from '@iconsans/react/linear';
 import isEmail from 'validator/lib/isEmail';
-import getUserId from '../../../appwrite/account.appwrite';
+import getuserEmail from '../../../appwrite/account.appwrite';
 import { isEmpty } from 'validator';
 import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
@@ -36,7 +36,7 @@ const GenerateInvoice = () => {
     });
 
     const fetchUser = async () => {
-        const user = await getUserId();
+        const user = await getuserEmail();
 
         if (user) {
             getUser(user.userEmail)
@@ -48,12 +48,12 @@ const GenerateInvoice = () => {
                         senderAddress: data.businessAddress,
                         profielPicUrl: data?.profilePicUrl
                     })
-                }).catch((err) => {
-                    console.error("Error", err);
+                }).catch(({ response }) => {
+                    console.error("Error", response);
                     toast.error('Failed to fetch user Details')
                     if (response.status === 404) {
                         navigate('/signup')
-                    }
+                    } 
                 });
         }
     };

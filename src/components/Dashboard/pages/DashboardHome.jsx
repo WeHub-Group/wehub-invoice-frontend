@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { getUser } from '../../../api/database.api';
-import getUserId from '../../../appwrite/account.appwrite';
+import getuserEmail from '../../../appwrite/account.appwrite';
 import { toast, ToastContainer } from 'react-toastify';
 import { toCurrencyFormat } from '../../basic/toCurrency';
 import 'react-toastify/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { CheckIfUserIsSignedUp } from '../../Authentication/CheckIfUserIsSignedUp';
 
 const DashboardHome = () => {
     const navigate = useNavigate()
@@ -20,21 +21,21 @@ const DashboardHome = () => {
     });
 
     const fetchUser = async () => {
-        const user = await getUserId();
+        const user = await getuserEmail();
 
         if (user) {
             getUser(user.userEmail)
                 .then(({ data }) => {
-                    setUser(data)
+                    setUser(data);
                 }).catch(({ response }) => {
                     console.error("Error", response);
-                    toast.error('Failed to fetch user Details')
                     if (response.status === 404) {
                         navigate('/signup')
                     }
                 });
         }
     };
+
     useEffect(() => {
         fetchUser();
     }, [])

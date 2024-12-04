@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TypeAnimation } from 'react-type-animation';
 import InputField from '../components/Authentication/InputField';
 import { motion } from 'framer-motion';
@@ -9,19 +9,14 @@ import Button from '../components/basic/Button';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
-    const [loggedInUser, setLoggedInUser] = useState(null);
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState('');
-    Button.changeStatus(false)
-    const User = localStorage.getItem('cookieFallback')
-
-
+    Button.changeStatus(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
-
 
         // Verify Input
         if (validator.isEmpty(email)) {
@@ -38,21 +33,22 @@ const Login = () => {
         }
         else {
             Button.changeStatus(true)
+
+            await account.deleteSessions();
+
             await account.createEmailPasswordSession(email, password)
                 .then((result) => {
                     navigate('/dashboard')
                 }).catch((err) => {
                     Button.changeStatus(false)
-                    toast.error('Error')
+                    toast.error('User Account not found: try again')
                     console.log(err);
                 });
         }
     }
 
 
-    return User ?
-        <Navigate to={'/dashboard'} />
-        :
+    return (
         < div className="w-screen h-screen flex flex-row bg-black" >
             <ToastContainer position='top-right' />
             <div className="w-full relative md:flex hidden">
@@ -119,6 +115,7 @@ const Login = () => {
                 </motion.div>
             </div>
         </div >
+    )
 }
 
 export default Login

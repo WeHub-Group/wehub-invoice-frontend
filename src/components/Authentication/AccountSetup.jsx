@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import InputField from './InputField'
 import { TypeAnimation } from 'react-type-animation'
 import { toast, ToastContainer } from 'react-toastify'
@@ -10,15 +10,15 @@ import validator from 'validator'
 import { motion } from 'framer-motion';
 import InputImageCircleView from '../basic/InputImageCircleView';
 import { upload } from '../../appwrite/storage.appwrite';
-import getUserId from '../../appwrite/account.appwrite'
+import getuserEmail from '../../appwrite/account.appwrite'
 import addUserToDB from '../../api/database.api'
 
 
 const AccountSetup = () => {
     const navigate = useNavigate()
-    const location = useLocation()
     const [firstname, setFirstame] = useState('')
     const [lastname, setLastname] = useState('')
+    const [telephone, setTelephone] = useState('');
     const [businessName, setBusinessName] = useState('')
     const [businessAddress, setBusinessAddress] = useState('')
     const [image, setImage] = useState(null);
@@ -32,10 +32,10 @@ const AccountSetup = () => {
         setImage(await getImage(file))
     };
 
+
     async function handleSubmit(e) {
         e.preventDefault();
-        const user = await getUserId();
-
+        const user = await getuserEmail();
 
         if (validator.isEmpty(firstname) || firstname.length < 2) {
             setError('Firstname cannot be blank or less than 2')
@@ -44,6 +44,12 @@ const AccountSetup = () => {
         if (validator.isEmpty(lastname) || lastname.length < 2) {
             setError('Lastname cannot be blank or less than 2')
             return false;
+        }
+        if (validator.isEmpty(telephone)) {
+            setError('Telephone cannot be empty')
+        }
+        if (!validator.isMobilePhone(telephone)) {
+            setError('Phone number is not a valid phone Number')
         }
         if (validator.isEmpty(businessName) || businessName.length < 3) {
             setError('Business Name cannot be blank or less than 3')
@@ -59,6 +65,7 @@ const AccountSetup = () => {
         }
         else {
             Button.changeStatus(true)
+
             await upload(profilePic)
                 .then(async (result) => {
                     const payload = {
@@ -66,16 +73,17 @@ const AccountSetup = () => {
                         lastname: lastname,
                         email: user.userEmail,
                         profilePicUrl: result,
-                        phoneNumber: location.state.telephone,
+                        phoneNumber: telephone,
                         businessName: businessName,
                         businessAddress: businessAddress,
                     }
 
                     addUserToDB(payload)
-                        .then((result) => {
+                        .then(() => {
                             navigate('/dashboard')
                         }).catch(({ response }) => {
                             toast.error(response.data.message)
+                            console.log(response);
                         });
 
                 }).catch((err) => {
@@ -128,7 +136,7 @@ const AccountSetup = () => {
                     <h1 className="font-extrabold font-lato text-2xl">Welcome, Let's get your setup</h1>
                     <h3 className="text-grey text-sm">Please fill in the details to complete your account setup</h3>
 
-                    <form className="mt-1">
+                    <div className="mt-1">
 
                         <div className="mt-3 flex flex-col gap-2">
                             <InputImageCircleView image={image} handleImageChange={handleImageChange} />
@@ -137,6 +145,8 @@ const AccountSetup = () => {
                         <InputField type={'text'} placeholder={'Adamu'} label={'First Name'} required dark={true} value={firstname} onChange={({ target }) => setFirstame(target.value)} />
 
                         <InputField type={'text'} placeholder={'Bello'} label={'Last Name'} required dark={true} value={lastname} onChange={({ target }) => setLastname(target.value)} />
+
+                        <InputField type={'telephone'} placeholder={'+234 123456789'} label={'Phone Number'} value={telephone} onChange={(e) => setTelephone(e.target.value)} required dark={true} />
 
                         <InputField type={'text'} placeholder={'Adamu Bello Cosmetics'} label={'Bussiness Name'} required dark={true} value={businessName} onChange={({ target }) => setBusinessName(target.value)} />
 
@@ -154,7 +164,7 @@ const AccountSetup = () => {
                                 {error}
                             </motion.div>
                         }
-                    </form>
+                    </div>
 
                 </div>
             </div>

@@ -6,8 +6,8 @@ const addUserToDB = (payload) => {
 }
 
 // Read User
-export const getUser = (userId) => {
-    return axios.get(`${apiUrl}/user/${userId}`);
+export const getUser = (payload) => {
+    return axios.get(`${apiUrl}/user/${payload}`);
 }
 
 // Create Invoice
