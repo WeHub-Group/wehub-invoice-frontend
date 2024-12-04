@@ -5,15 +5,11 @@ import { Outlet } from 'react-router-dom'
 const UserDasboard = () => {
     return (
         <div className="flex h-screen">
-            <div className="md:flex hidden">
-                <Sidebar />
-            </div>
+            {/* Sidebar */}
+            <Sidebar />
 
+            {/* Layout */}
             <div className="flex-1 overflow-y-scroll">
-                <div className="md:hidden">
-                    <MobileNavbar />
-                </div>
-
                 <Outlet />
             </div>
         </div>

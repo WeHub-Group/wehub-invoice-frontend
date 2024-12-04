@@ -5,7 +5,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import { toCurrencyFormat } from '../../basic/toCurrency';
 import 'react-toastify/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import { CheckIfUserIsSignedUp } from '../../Authentication/CheckIfUserIsSignedUp';
 
 const DashboardHome = () => {
     const navigate = useNavigate()
@@ -154,9 +153,9 @@ const DashboardHome = () => {
 
 function EmptyInvoice() {
     return (
-        <div className="flex h-full flex-col justify-center items-center py-5 font-lato">
-            <img className='h-80' src='/assets/svg/empty-invoices.svg' alt="" />
-            <p className='text-2xl font-extrabold'>Start generating invoices to track Payments</p>
+        <div className="flex h-[100%] flex-col justify-center items-center py-5 font-lato">
+            <img className='h-40 md:h-80' src='/assets/svg/empty-invoices.svg' alt="" />
+            <p className='md:text-2xl text-lg text-center font-extrabold'>Start generating invoices to track Payments</p>
         </div>
     )
 }
