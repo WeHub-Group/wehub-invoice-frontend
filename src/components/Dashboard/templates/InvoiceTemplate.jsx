@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import Button from "../../../basic/Button";
+import Button from "../../basic/Button";
 import { toast, ToastContainer } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import { addInvoiceToDB } from "../../../../api/database.api";
-import { toCurrencyFormat } from "../../../basic/toCurrency";
+import { addInvoiceToDB } from "../../../api/database.api";
+import { toCurrencyFormat } from "../../basic/toCurrency";
 
 
 const InvoiceTemplate = () => {
