@@ -15,8 +15,10 @@ import Settings from './components/Dashboard/pages/Settings'
 import ForgotPassword from './components/Authentication/ForgotPassword'
 import DashboardHome from './components/Dashboard/pages/DashboardHome';
 import InvoiceTemplate from './components/Dashboard/pages/templates/InvoiceTemplate'
+import { Analytics } from "@vercel/analytics/react"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+  <Analytics />,
   <BrowserRouter>
     <Routes>
 
