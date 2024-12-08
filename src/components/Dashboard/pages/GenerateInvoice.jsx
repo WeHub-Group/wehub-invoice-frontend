@@ -35,6 +35,7 @@ const GenerateInvoice = () => {
         itemList: []
     });
 
+    // Fetch User and Verification 
     const fetchUser = async () => {
         const user = await getuserEmail();
 
@@ -53,7 +54,7 @@ const GenerateInvoice = () => {
                     toast.error('Failed to fetch user Details')
                     if (response.status === 404) {
                         navigate('/signup')
-                    } 
+                    }
                 });
         }
     };
@@ -101,6 +102,7 @@ const GenerateInvoice = () => {
     };
     const clearAll = () => {
         setFormData({
+            ...formData,
             invoiceId: '',
             recipientName: '',
             recipientEmail: '',
@@ -122,8 +124,6 @@ const GenerateInvoice = () => {
 
         e.preventDefault();
         setFormData({ ...formData, itemList })
-        console.log(formData);
-
 
         // Validation should go here
         if (isEmpty(formData.invoiceId || '')) {
@@ -187,13 +187,13 @@ const GenerateInvoice = () => {
     return (
         <Card>
             <ToastContainer position="top-right" />
-            <p className="font-bold md:text-lg">Create New Invoice</p>
+            <p className="font-bold text-xl mb-2 md:mb-5 text-end">Create New Invoice</p>
 
             {/* Invoice ID */}
             <div className="flex md:flex-row flex-col gap-3 justify-between items-center">
-                <p className="md:text-2xl text-lg font-bold mt-3">
+                <p className="md:text-2xl text-xl font-bold mt-3">
                     Invoice: <span className="text-darkPrimary font-normal">
-                        {formData.invoiceId || 'INV-YYYYMMDD-001'}
+                        {formData.invoiceId || 'INV-YYYYMMDD-AAA'}
                     </span>
                 </p>
 
@@ -208,8 +208,8 @@ const GenerateInvoice = () => {
             </div>
 
             {/* Form Inputs */}
-            <div className="grid grid-cols-2 mt-8 gap-x-10">
-                <img src={formData.profielPicUrl || 'https://via.placeholder.com/150'}
+            <div className="md:grid md:grid-cols-2 flex flex-col mt-8 gap-x-10">
+                <img src={formData.profielPicUrl || 'https://via.placeholder.com/130'}
                     className="rounded-full w-32 h-32 bg-gray-300 border-2 border-black " />
                 <div className=""></div>
 
@@ -241,7 +241,7 @@ const GenerateInvoice = () => {
                 <div className="col-span-full mt-10">
 
                     {/* Item Forms */}
-                    <form className="flex flex-row w-full justify-between">
+                    <form className="flex flex-col md:flex-row w-full justify-between">
                         <InputField value={itemName} onChange={(e) => setItemName(e.target.value)} type="text" placeholder="Item" label="Item Name" required />
                         <InputField value={itemRate} onChange={(e) => setItemRate(e.target.value)} type="text" placeholder="100.00" label="Rate" required />
                         <InputField value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} type="number" placeholder="1" label="Qty" required />
@@ -251,15 +251,37 @@ const GenerateInvoice = () => {
                         Add Item
                     </button>
 
-                    {/* Item List */}
-                    <div className="grid grid-cols-4 text-white bg-black mt-3 px-3">
+
+
+                    {/* Mobile */}
+                    {itemList.map((item, index) => (
+                        <div key={index} className="bg-gray-100 flex flex-col mt-3 p-2 rounded-lg">
+                            <p><strong>Name:</strong> {item.itemName}</p>
+                            <p><strong>Quantity:</strong> {item.itemQuantity}</p>
+                            <p><strong>Rate: </strong>{toCurrencyFormat(item.itemRate)}</p>
+                            <p className="flex mt-3">
+                                <strong>Total:</strong> {toCurrencyFormat(item.itemRate * item.itemQuantity)}
+                            </p>
+
+                            <div className="flex gap-2 justify-end">
+                                <button
+                                    onClick={() => { deleteItem(index) }}
+                                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition-all"  >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* Laptop */}
+                    <div className="hidden md:grid grid-cols-4 text-white bg-black mt-3 px-3">
                         <p>Item</p>
                         <p>Qty</p>
                         <p>Rate</p>
                         <p>Amount</p>
                     </div>
                     {itemList.map((item, index) => (
-                        <div key={index} className="grid grid-cols-4 items-center mb-2">
+                        <div key={index} className="hidden md:grid grid-cols-4 items-center mb-2">
                             <p>{item.itemName}</p>
                             <p>{item.itemQuantity}</p>
                             <p>{toCurrencyFormat(item.itemRate)}</p>
@@ -271,7 +293,7 @@ const GenerateInvoice = () => {
                     ))}
 
                     {/* Total */}
-                    <div className="grid grid-cols-4 mt-5">
+                    <div className="flex md:grid grid-cols-4 mt-5">
                         <div className="col-span-3 text-right font-bold mx-3">Total </div>
                         <div className="font-semibold">{toCurrencyFormat(calculateTotal())}</div>
                     </div>
