@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getUser } from '../../../api/database.api';
 import getuserEmail from '../../../appwrite/account.appwrite';
 import { toast, ToastContainer } from 'react-toastify';
-import { toCurrencyFormat } from '../../basic/toCurrency';
+// import { toCurrencyFormat } from '../../basic/toCurrency';
 import 'react-toastify/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa6';
@@ -23,7 +23,11 @@ const DashboardHome = () => {
         invoices: []
     });
     const [isHidden, setIsHidden] = useState(true)
-
+    const toCurrencyFormat = (number) =>
+        number.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+        });
     const fetchUser = async () => {
         const user = await getuserEmail();
 

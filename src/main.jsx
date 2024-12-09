@@ -16,6 +16,7 @@ import ForgotPassword from './components/Authentication/ForgotPassword'
 import DashboardHome from './components/Dashboard/pages/DashboardHome';
 import InvoiceTemplate from './components/Dashboard/templates/InvoiceTemplate'
 import { Analytics } from "@vercel/analytics/react"
+import Logout from './screens/Logout'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
@@ -43,7 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route index element={<DashboardHome />} />
             <Route path="generateinvoice" element={<GenerateInvoice />} />
             <Route path='generateinvoice/template' element={<InvoiceTemplate />} />
-            <Route path="logout" element={<h1>Logout</h1>} />
+            <Route path="logout" element={<Logout />} />
             <Route path="setting" element={<Settings />} />
           </Route>
 

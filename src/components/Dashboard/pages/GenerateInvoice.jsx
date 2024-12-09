@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { getUser } from '../../../api/database.api';
+import CurrencyDropdown, { toCurrencyFormat } from '../../basic/toCurrency';
 
 const GenerateInvoice = () => {
     const navigate = useNavigate()
@@ -18,9 +19,10 @@ const GenerateInvoice = () => {
     const [itemRate, setItemRate] = useState('');
     const [itemQuantity, setItemQuantity] = useState(1);
     const [itemList, setItemList] = useState([]);
+    const [selectedCurrency, setSelectedCurrency] = useState('NGN');
     const [formData, setFormData] = useState({
         invoiceId: "",
-        profielPicUrl: "",
+        profilePicUrl: "",
         senderName: "",
         senderEmail: "",
         senderAddress: "",
@@ -32,6 +34,7 @@ const GenerateInvoice = () => {
         dueDate: "",
         terms: "",
         tax: "",
+        currency: '',
         itemList: []
     });
 
@@ -72,8 +75,15 @@ const GenerateInvoice = () => {
         }));
     };
 
-    const toCurrencyFormat = (number) =>
-        number.toLocaleString('en-US', { style: 'currency', currency: 'NGN' });
+
+    const handleCurrencyChange = (currency) => {
+        setSelectedCurrency(currency);
+        setFormData((prevData) => ({
+            ...prevData,
+            currency: currency,
+        }));
+    };
+
 
     const calculateTotal = () =>
         itemList.reduce((acc, item) => acc + item.itemRate * item.itemQuantity, 0);
@@ -120,10 +130,10 @@ const GenerateInvoice = () => {
 
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
-        setFormData({ ...formData, itemList })
+        await setFormData({ ...formData, itemList })
 
         // Validation should go here
         if (isEmpty(formData.invoiceId || '')) {
@@ -171,7 +181,10 @@ const GenerateInvoice = () => {
                     {
                         label: 'Yes',
                         className: 'bg-green-500',
-                        onClick: () => navigate('template', { state: formData }),
+                        onClick: () => {
+                            console.log(formData),
+                                navigate('template', { state: formData })
+                        }
                     },
                     {
                         label: 'No',
@@ -246,6 +259,8 @@ const GenerateInvoice = () => {
                         <InputField value={itemRate} onChange={(e) => setItemRate(e.target.value)} type="text" placeholder="100.00" label="Rate" required />
                         <InputField value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} type="number" placeholder="1" label="Qty" required />
                     </form>
+                    {/* Currency Selector */}
+                    <CurrencyDropdown onCurrencyChange={handleCurrencyChange} />
 
                     <button onClick={addToList} className="bg-darkPrimary text-white rounded-lg p-3 hover:scale-110 transition-all w-40 mt-3">
                         Add Item
@@ -255,12 +270,12 @@ const GenerateInvoice = () => {
 
                     {/* Mobile */}
                     {itemList.map((item, index) => (
-                        <div key={index} className="bg-gray-100 flex flex-col mt-3 p-2 rounded-lg">
+                        <div key={index} className="bg-gray-100 md:hidden flex flex-col mt-3 p-2 rounded-lg">
                             <p><strong>Name:</strong> {item.itemName}</p>
                             <p><strong>Quantity:</strong> {item.itemQuantity}</p>
-                            <p><strong>Rate: </strong>{toCurrencyFormat(item.itemRate)}</p>
+                            <p><strong>Rate: </strong>{toCurrencyFormat(item.itemRate, selectedCurrency)}</p>
                             <p className="flex mt-3">
-                                <strong>Total:</strong> {toCurrencyFormat(item.itemRate * item.itemQuantity)}
+                                <strong>Total:</strong> {toCurrencyFormat(item.itemRate * item.itemQuantity, selectedCurrency)}
                             </p>
 
                             <div className="flex gap-2 justify-end">
@@ -280,22 +295,24 @@ const GenerateInvoice = () => {
                         <p>Rate</p>
                         <p>Amount</p>
                     </div>
-                    {itemList.map((item, index) => (
-                        <div key={index} className="hidden md:grid grid-cols-4 items-center mb-2">
-                            <p>{item.itemName}</p>
-                            <p>{item.itemQuantity}</p>
-                            <p>{toCurrencyFormat(item.itemRate)}</p>
-                            <p className="flex justify-between items-center">
-                                {toCurrencyFormat(item.itemRate * item.itemQuantity)}
-                                <Trash onClick={() => deleteItem(index)} className="text-red-500 hover:scale-105 hover:rotate-45 text-xl transition-all ml-3 cursor-pointer" />
-                            </p>
-                        </div>
-                    ))}
+                    <div className="flex flex-col gap-3">
+                        {itemList.map((item, index) => (
+                            <div key={index} className="hidden md:grid grid-cols-4 items-center mb-2">
+                                <p>{item.itemName}</p>
+                                <p>{item.itemQuantity}</p>
+                                <p>{toCurrencyFormat(item.itemRate, selectedCurrency)}</p>
+                                <p className="flex justify-between items-center">
+                                    {toCurrencyFormat(item.itemRate * item.itemQuantity, selectedCurrency)}
+                                    <Trash onClick={() => deleteItem(index)} className="text-red-500 hover:scale-105 hover:rotate-45 text-xl transition-all ml-3 cursor-pointer" />
+                                </p>
+                            </div>
+                        ))}
+                    </div>
 
                     {/* Total */}
                     <div className="flex md:grid grid-cols-4 mt-5">
                         <div className="col-span-3 text-right font-bold mx-3">Total </div>
-                        <div className="font-semibold">{toCurrencyFormat(calculateTotal())}</div>
+                        <div className="font-semibold">{toCurrencyFormat(calculateTotal(), selectedCurrency)}</div>
                     </div>
                 </div>
 

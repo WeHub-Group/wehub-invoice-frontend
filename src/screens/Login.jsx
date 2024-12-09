@@ -7,7 +7,7 @@ import { account } from '../appwrite/appwrite.config';
 import validator from 'validator';
 import Button from '../components/basic/Button';
 import { toast, ToastContainer } from 'react-toastify';
-import { FaSpider, FaSpinner } from 'react-icons/fa6';
+import { FaSpinner } from 'react-icons/fa6';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -17,46 +17,48 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    // Check if an account session exist
-    async function checkSession() {
+    // Check if a user session exists
+    const hasSession = async () => {
         try {
-            const user = await account.get();
-            return true; // Session is active
-        } catch (err) {
-            console.error("No active session:", err);
-            return false; // No active session
+            await account.get();
+            return true;
+        } catch {
+            return false;
         }
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         // Input Validation
         if (!validator.isEmail(email)) {
             setError('Please provide a valid email.');
+            setLoading(false);
             return;
         }
         if (password.length < 8) {
             setError('Password must be at least 8 characters long.');
+            setLoading(false);
             return;
         }
 
         try {
-            setLoading(true);
-
-            if (!checkSession()) {
-                await account.createEmailPasswordSession(email, password);
-            }
-            else {
+            // Ensure session handling
+            if (await hasSession()) {
+                console.log("Existing session detected. Logging out...");
                 await account.deleteSessions();
-                await account.createEmailPasswordSession(email, password);
             }
 
+            console.log("Creating a new session...");
+            await account.createEmailPasswordSession(email, password);
+
+            toast.success('Login successful!');
             navigate('/dashboard');
         } catch (err) {
-            toast.error('User account not found. Please try again.');
-            console.error(err);
+            console.error("Login error:", err);
+            toast.error(err.message || 'An error occurred during login.');
         } finally {
             setLoading(false);
         }
@@ -65,7 +67,7 @@ const Login = () => {
     return (
         <div className="w-screen h-screen flex flex-row bg-black">
             <ToastContainer position="top-right" />
-            {/* Left Section: Illustration and Quotes */}
+            {/* Left Section */}
             <div className="w-full relative md:flex hidden">
                 <span className="flex items-center justify-center h-full w-full">
                     <motion.img
@@ -97,7 +99,7 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* Right Section: Login Form */}
+            {/* Right Section */}
             <div className="w-full bg-black p-5 relative flex items-center">
                 <Link to="/signup" className="absolute top-5 right-5 text-primary font-lato">
                     Sign Up
@@ -139,7 +141,7 @@ const Login = () => {
                             onClick={() => setShowPassword((prev) => !prev)}
                             className="text-primary mt-2 text-sm"
                         >
-                            {showPassword ? 'Hide' : 'Show'} Password
+                            {showPassword ? 'Hide Password' : 'Show Password'}
                         </button>
 
                         <Link to="/forgotpassword" className="text-primary mt-5 font-lato text-sm">
@@ -148,13 +150,14 @@ const Login = () => {
 
                         <Button
                             className="bg-white text-black w-full rounded-lg text-center font-lato p-3 font-extrabold mt-5 flex justify-center"
-                            defaultText={loading ?
+                            defaultText={loading ? (
                                 <motion.div
                                     animate={{ rotate: 360 }}
-                                    transition={{ duration: 1, repeat: Infinity }}>
+                                    transition={{ duration: 1, repeat: Infinity }}
+                                >
                                     <FaSpinner />
-                                </motion.div> : 'Log In'}
-                            onClick={handleSubmit}
+                                </motion.div>
+                            ) : 'Log In'}
                             disabled={loading}
                         />
                     </form>
